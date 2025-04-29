@@ -1915,8 +1915,17 @@ Make sure to follow all the instructions while answering questions.
           });
           return;
         }
-
-        const result = Math.floor(Math.random() * sides) + 1;
+        const result;
+        if (sides == 6) {
+            const rollnumber = Math.floor(Math.random() * 3996) + 1;
+            if (rollnumber > 3990) {
+                result = 7;
+            } else {
+                result = Math.ceil(rollnumber / 665);
+            }
+        } else {
+            result = Math.floor(Math.random() * sides) + 1;
+        }
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: BOT_USERS.RNG,
