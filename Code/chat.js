@@ -1918,7 +1918,7 @@ Make sure to follow all the instructions while answering questions.
         const result;
         if (sides == 6) {
             const rollnumber = Math.floor(Math.random() * 3996) + 1;
-            if (rollnumber > 3990) {
+            if (rollnumber > 3991) {
                 result = 7;
             } else {
                 result = Math.ceil(rollnumber / 665);
