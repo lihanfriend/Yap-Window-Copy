@@ -13,6 +13,7 @@
     EOD: "[EOD]",
     ADMIN: "[ADMIN]",
     SNAKE: "[Snake Game]",
+    ARCHFIEND: "[Archfiend Dice]"
   };
   const users = {};
   const email = auth.currentUser.email;
@@ -1921,28 +1922,35 @@ Make sure to follow all the instructions while answering questions.
         let result;
         if (sides == 6) {
             let rollnumber = Math.floor(Math.random() * 3997) + 1;
-            if (rollnumber > 2000) {
+            if (rollnumber > 3990) {
                 result = 7;
-                const botMessageRef = push(messagesRef);
                 await update(botMessageRef, {
-                  User: "[Archfiend Dice]",
+                  User: BOT_USERS.RNG,
+                  Message: `🎲 Rolling a 6-sided die: 7`,
+                  Date: Date.now(),
+                });
+                sleep(2000);
+                const archfiend1 = push(messagesRef);
+                await update(archfiend1, {
+                  User: BOT_USERS.ARCHFIEND,
                   Message: `Wait, a 7? But dice only have 6 sides...`,
                   Date: Date.now(),
                 });
                 sleep(2000);
-                const botMessageRef2 = push(messagesRef);
-                await update(botMessageRef2, {
-                  User: "[Archfiend Dice]",
+                const archfiend2 = push(messagesRef);
+                await update(archfiend2, {
+                  User: BOT_USERS.ARCHFIEND,
                   Message: `Hm...?`,
                   Date: Date.now(),
                 });
                 sleep(2000);
-                const botMessageRef3 = push(messagesRef);
-                await update(botMessageRef3, {
-                  User: "[Archfiend Dice]",
+                const archfiend3 = push(messagesRef);
+                await update(archfiend3, {
+                  User: BOT_USERS.ARCHFIEND,
                   Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
                   Date: Date.now(),
                 });
+                return;
             } else {
                 result = Math.ceil(rollnumber / 665);
             }
