@@ -83,7 +83,7 @@ function sleep(ms) {
       return;
     }
 
-    const  =
+    const hasUnreadMessages =
       document.querySelector(".message.unread") !== null;
 
     if (!hasUnreadMessages) {
