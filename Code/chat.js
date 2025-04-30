@@ -1924,34 +1924,6 @@ Make sure to follow all the instructions while answering questions.
             let rollnumber = Math.floor(Math.random() * 3997) + 1;
             if (rollnumber > 0) {
                 result = 7;
-                const botMessageRef = push(messagesRef);
-                await update(botMessageRef, {
-                  User: BOT_USERS.RNG,
-                  Message: `🎲 Rolling a 6-sided die: 7`,
-                  Date: Date.now(),
-                });
-                sleep(2000);
-                const archfiend1 = push(messagesRef);
-                await update(archfiend1, {
-                  User: BOT_USERS.ARCHFIEND,
-                  Message: `Wait, a 7? But dice only have 6 sides...`,
-                  Date: Date.now(),
-                });
-                sleep(2000);
-                const archfiend2 = push(messagesRef);
-                await update(archfiend2, {
-                  User: BOT_USERS.ARCHFIEND,
-                  Message: `Hm...?`,
-                  Date: Date.now(),
-                });
-                sleep(2000);
-                const archfiend3 = push(messagesRef);
-                await update(archfiend3, {
-                  User: BOT_USERS.ARCHFIEND,
-                  Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
-                  Date: Date.now(),
-                });
-                return;
             } else {
                 result = Math.ceil(rollnumber / 665);
             }
@@ -1964,6 +1936,35 @@ Make sure to follow all the instructions while answering questions.
           Message: `🎲 Rolling a ${sides}-sided die: ${result}`,
           Date: Date.now(),
         });
+        if (result == 7) {
+          const botMessageRef = push(messagesRef);
+          await update(botMessageRef, {
+            User: BOT_USERS.RNG,
+            Message: `🎲 Rolling a 6-sided die: 7`,
+            Date: Date.now(),
+          });
+          sleep(2000);
+          const archfiend1 = push(messagesRef);
+          await update(archfiend1, {
+            User: BOT_USERS.ARCHFIEND,
+            Message: `Wait, a 7? But dice only have 6 sides...`,
+            Date: Date.now(),
+          });
+          sleep(2000);
+          const archfiend2 = push(messagesRef);
+          await update(archfiend2, {
+            User: BOT_USERS.ARCHFIEND,
+            Message: `Hm...?`,
+            Date: Date.now(),
+          });
+          sleep(2000);
+          const archfiend3 = push(messagesRef);
+          await update(archfiend3, {
+            User: BOT_USERS.ARCHFIEND,
+            Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
+            Date: Date.now(),
+          });
+        }
       } else if (pureMessage.trim().toLowerCase().startsWith("/snake")) {
         const temp_email =
           typeof email !== "undefined"
