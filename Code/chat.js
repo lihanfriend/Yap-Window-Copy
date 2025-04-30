@@ -1924,7 +1924,7 @@ Make sure to follow all the instructions while answering questions.
             let rollnumber = Math.floor(Math.random() * 3997) + 1;
             if (rollnumber > 0) {
                 result = 7;
-                const botMessageRef = push(botMessageRef);
+                const botMessageRef = push(messagesRef);
                 await update(botMessageRef, {
                   User: BOT_USERS.RNG,
                   Message: `🎲 Rolling a 6-sided die: 7`,
