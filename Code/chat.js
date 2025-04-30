@@ -1989,6 +1989,26 @@ Make sure to follow all the instructions while answering questions.
             Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
             Date: Date.now(),
           });
+          const image = document.createElement('img');
+          image.src = 'https://i.postimg.cc/8PmBs93W/archfiend-removebg-preview.png';
+          image.style.position = 'fixed';
+          image.style.top = '50%';
+          image.style.left = '50%';
+          image.style.transform = 'translate(-50%, -50%)';
+          image.style.width = '200px';
+          image.style.height = '200px';
+          image.style.zIndex = '9999';
+          image.style.backgroundColor = 'white';
+          image.style.borderRadius = '8px';
+          image.style.transition = 'opacity 1s';
+          image.style.opacity = '1';
+          document.body.appendChild(image);
+          setTimeout(() => {
+              image.style.opacity = '0';
+          }, 4000);
+          setTimeout(() => {
+              image.remove();
+          }, 5000);
           isSending = false;
           sendButton.disabled = false;
           return;
