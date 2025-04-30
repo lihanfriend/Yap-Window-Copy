@@ -1930,13 +1930,15 @@ Make sure to follow all the instructions while answering questions.
                   Date: Date.now(),
                 });
                 sleep(2000);
-                await update(botMessageRef, {
+                const botMessageRef2 = push(messagesRef);
+                await update(botMessageRef2, {
                   User: "[Archfiend Dice]",
                   Message: `Hm...?`,
                   Date: Date.now(),
                 });
                 sleep(2000);
-                await update(botMessageRef, {
+                const botMessageRef3 = push(messagesRef);
+                await update(botMessageRef3, {
                   User: "[Archfiend Dice]",
                   Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
                   Date: Date.now(),
