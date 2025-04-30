@@ -1,7 +1,7 @@
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}  
 (async function () {
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }  
   var readMessages = {};
   var readAll = true;
   var isDark = false;
