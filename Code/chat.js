@@ -1,3 +1,6 @@
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 (async function () {
   var readMessages = {};
   var readAll = true;
@@ -80,7 +83,7 @@
       return;
     }
 
-    const hasUnreadMessages =
+    const  =
       document.querySelector(".message.unread") !== null;
 
     if (!hasUnreadMessages) {
@@ -1959,20 +1962,29 @@ Make sure to follow all the instructions while answering questions.
           Date: Date.now(),
         });
         if (result == 7) {
+          await sleep(2000);
           const archfiend1 = push(messagesRef);
           await update(archfiend1, {
             User: BOT_USERS.ARCHFIEND,
             Message: `Wait, a 7? But dice only have 6 sides...`,
             Date: Date.now(),
           });
+          await sleep(2000);
           const archfiend2 = push(messagesRef);
           await update(archfiend2, {
             User: BOT_USERS.ARCHFIEND,
             Message: `Hm...?`,
             Date: Date.now(),
           });
+          await sleep(2000);
           const archfiend3 = push(messagesRef);
           await update(archfiend3, {
+            User: BOT_USERS.ARCHFIEND,
+            Message: `‌\nWOW! ${email} found Archfiend Dye!\nAn uncommonly rare 1/666 (0.1501502%) chance!\nTalk to Yiyang's name redacted at Yiyang's house to learn more about this dye!\n‌`,
+            Date: Date.now(),
+          });
+          const archfiend4 = push(messagesRef);
+          await update(archfiend4, {
             User: BOT_USERS.ARCHFIEND,
             Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
             Date: Date.now(),
