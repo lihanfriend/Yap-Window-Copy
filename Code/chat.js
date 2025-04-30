@@ -1,6 +1,3 @@
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}  
 (async function () {
   var readMessages = {};
   var readAll = true;
@@ -1943,27 +1940,25 @@ Make sure to follow all the instructions while answering questions.
             Message: `🎲 Rolling a 6-sided die: 7`,
             Date: Date.now(),
           });
-          sleep(2000);
           const archfiend1 = push(messagesRef);
           await update(archfiend1, {
             User: BOT_USERS.ARCHFIEND,
             Message: `Wait, a 7? But dice only have 6 sides...`,
             Date: Date.now(),
           });
-          sleep(2000);
           const archfiend2 = push(messagesRef);
           await update(archfiend2, {
             User: BOT_USERS.ARCHFIEND,
             Message: `Hm...?`,
             Date: Date.now(),
           });
-          sleep(2000);
           const archfiend3 = push(messagesRef);
           await update(archfiend3, {
             User: BOT_USERS.ARCHFIEND,
             Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
             Date: Date.now(),
           });
+          break;
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/snake")) {
         const temp_email =
