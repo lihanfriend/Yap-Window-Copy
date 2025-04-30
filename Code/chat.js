@@ -1920,7 +1920,23 @@ Make sure to follow all the instructions while answering questions.
             let rollnumber = Math.floor(Math.random() * 3997) + 1;
             if (rollnumber > 2000) {
                 result = 7;
-                sendMessage('Hi!')
+                const botMessageRef = push(messagesRef);
+                await update(botMessageRef, {
+                  User: "Archfiend Dice",
+                  Message: `Wait, a 7? But dice only have 6 sides...`,
+                  Date: Date.now(),
+                });
+                await update(botMessageRef, {
+                  User: "Archfiend Dice",
+                  Message: `Hm...?`,
+                  Date: Date.now(),
+                });
+                await update(botMessageRef, {
+                  User: "Archfiend Dice",
+                  Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
+                  Date: Date.now(),
+                });
+
             } else {
                 result = Math.ceil(rollnumber / 665);
             }
