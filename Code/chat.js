@@ -1918,8 +1918,9 @@ Make sure to follow all the instructions while answering questions.
         let result;
         if (sides == 6) {
             let rollnumber = Math.floor(Math.random() * 3997) + 1;
-            if (rollnumber > 3991) {
+            if (rollnumber > 2000) {
                 result = 7;
+                sendMessage('Hi!')
             } else {
                 result = Math.ceil(rollnumber / 665);
             }
