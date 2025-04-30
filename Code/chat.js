@@ -1960,7 +1960,9 @@ Make sure to follow all the instructions while answering questions.
             Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
             Date: Date.now(),
           });
-          break;
+          isSending = false;
+          sendButton.disabled = false;
+          return;
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/snake")) {
         const temp_email =
