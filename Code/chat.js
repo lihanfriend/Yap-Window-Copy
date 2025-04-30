@@ -1,4 +1,7 @@
 (async function () {
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }  
   var readMessages = {};
   var readAll = true;
   var isDark = false;
@@ -1922,21 +1925,22 @@ Make sure to follow all the instructions while answering questions.
                 result = 7;
                 const botMessageRef = push(messagesRef);
                 await update(botMessageRef, {
-                  User: "Archfiend Dice",
+                  User: "[Archfiend Dice]",
                   Message: `Wait, a 7? But dice only have 6 sides...`,
                   Date: Date.now(),
                 });
+                sleep(2000);
                 await update(botMessageRef, {
-                  User: "Archfiend Dice",
+                  User: "[Archfiend Dice]",
                   Message: `Hm...?`,
                   Date: Date.now(),
                 });
+                sleep(2000);
                 await update(botMessageRef, {
-                  User: "Archfiend Dice",
+                  User: "[Archfiend Dice]",
                   Message: `The Dice broke apart, revealing an Archfiend Dye hidden within!`,
                   Date: Date.now(),
                 });
-
             } else {
                 result = Math.ceil(rollnumber / 665);
             }
