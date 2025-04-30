@@ -1959,12 +1959,6 @@ Make sure to follow all the instructions while answering questions.
           Date: Date.now(),
         });
         if (result == 7) {
-          const botMessageRef = push(messagesRef);
-          await update(botMessageRef, {
-            User: BOT_USERS.RNG,
-            Message: `🎲 Rolling a 6-sided die: 7`,
-            Date: Date.now(),
-          });
           const archfiend1 = push(messagesRef);
           await update(archfiend1, {
             User: BOT_USERS.ARCHFIEND,
