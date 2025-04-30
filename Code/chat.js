@@ -1922,7 +1922,7 @@ Make sure to follow all the instructions while answering questions.
         let result;
         if (sides == 6) {
             let rollnumber = Math.floor(Math.random() * 3997) + 1;
-            if (rollnumber > 3990) {
+            if (rollnumber > 2000) {
                 result = 7;
                 await update(botMessageRef, {
                   User: BOT_USERS.RNG,
