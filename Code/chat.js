@@ -1915,9 +1915,9 @@ Make sure to follow all the instructions while answering questions.
           });
           return;
         }
-        var result;
+        let result;
         if (sides == 6) {
-            const rollnumber = Math.floor(Math.random() * 3996) + 1;
+            let rollnumber = Math.floor(Math.random() * 3997) + 1;
             if (rollnumber > 3991) {
                 result = 7;
             } else {
