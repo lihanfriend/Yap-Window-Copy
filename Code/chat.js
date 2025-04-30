@@ -10,7 +10,9 @@
     EOD: "[EOD]",
     ADMIN: "[ADMIN]",
     SNAKE: "[Snake Game]",
-    ARCHFIEND: "[Archfiend Dice]"
+    ARCHFIEND: "[Archfiend Dice]",
+    TIGGY: "[Tiggy]",
+    TIGGYBOT: "[Tiggy Bot]"
   };
   const users = {};
   const email = auth.currentUser.email;
@@ -2049,8 +2051,77 @@ Make sure to follow all the instructions while answering questions.
             createSnakeGame();
           }
         }
-      } else if (pureMessage.trim().toLowerCase().startsWith("/insert_command")) {
-        /* CODE HERE*/
+      } else if (pureMessage.trim().toLowerCase().startsWith("/tiggy")) {
+        const tiggydialoguehappy = ['*whine!*', '*whine, tiggy!*', '*roar*', '*whine?*', '*boop*'];
+        const tiggydialoguemid = ['*whine*', '*hmm...*', '*whine.*', '*squeak* [scuttles away]']
+        const tiggydialogueangry = ['*grrr*', '*whineee!!!!*', '*hmph*', '*roar!*']
+        function random(upto) {
+            return Math.floor(Math.random() * upto);
+        }
+        function tiggysay() {
+            const now = new Date();
+            const utcMilliseconds = now.getTime();
+            const pstOffsetMilliseconds = 7 * 60 * 60 * 1000;
+            const pstMillisecondsOfDay = (utcMilliseconds - pstOffsetMilliseconds) % (24 * 60 * 60 * 1000);
+            
+            const msAt8AM = 8 * 60 * 60 * 1000;
+            const msAt10AM = 10 * 60 * 60 * 1000;
+            const msAt11_30AM = (11 * 60 + 30) * 60 * 1000;
+            const msAt1PM = 13 * 60 * 60 * 1000;
+            const msAt3PM = 15 * 60 * 60 * 1000;
+            const msAt4_30PM = (16 * 60 + 30) * 60 * 1000;
+            const msAt6PM = 18 * 60 * 60 * 1000;
+            const msAt8PM = 20 * 60 * 60 * 1000;
+            const msAt9_30PM = (21 * 60 + 30) * 60 * 1000;
+            
+            if (
+              (pstMillisecondsOfDay >= msAt8AM && pstMillisecondsOfDay < msAt10AM) ||
+              (pstMillisecondsOfDay >= msAt1PM && pstMillisecondsOfDay < msAt3PM) ||
+              (pstMillisecondsOfDay >= msAt6PM && pstMillisecondsOfDay < msAt8PM)
+            ) {
+              const tiggydialogue = push(messagesRef);
+              await update(archfiend3, {
+                User: BOT_USERS.TIGGY,
+                Message: tiggydialoguehappy[random(tiggydialoguehappy.length)],
+                Date: Date.now(),
+              });
+            } else if (
+              (pstMillisecondsOfDay >= msAt10AM && pstMillisecondsOfDay < msAt11_30AM) ||
+              (pstMillisecondsOfDay >= msAt3PM && pstMillisecondsOfDay < msAt4_30PM) ||
+              (pstMillisecondsOfDay >= msAt8PM && pstMillisecondsOfDay < msAt9_30PM)
+            ) {
+              const tiggydialogue = push(messagesRef);
+              await update(archfiend3, {
+                User: BOT_USERS.TIGGY,
+                Message: tiggydialoguemid[random(tiggydialoguemid.length)],
+                Date: Date.now(),
+              });
+            } else {
+              const tiggydialogue = push(messagesRef);
+              await update(archfiend3, {
+                User: BOT_USERS.TIGGY,
+                Message: tiggydialogueangry[random(tiggydialogueangry.length)],
+                Date: Date.now(),
+              });
+            }
+        }
+        if (pureMessage.trim().toLowerCase() === "/tiggy help") {
+          const tiggyhelp = push(messagesRef);
+          await update(tiggyhelp, {
+            User: BOT_USERS.TIGGYBOT,
+            Message: `Welcome to your own interactive Tiggy in Yap Window! With this bot, you can interact with Tiggy however you like!`,
+            Date: Date.now(),
+          });
+          push(messagesRef);
+          await update(tiggyhelp, {
+            User: BOT_USERS.TIGGYBOT,
+            Message: `Tiggy is fed every day at 8am, 1pm, and 6pm. Don't mess with Tiggy when it is hungry!`,
+            Date: Date.now(),
+          });
+        }
+        if (pureMessage.trim().toLowerCase() === "/tiggy pet") {
+            
+        }
       } else {
         const newMessageRef = push(messagesRef);
         await update(newMessageRef, {
