@@ -1994,16 +1994,20 @@ Make sure to follow all the instructions while answering questions.
           image.style.position = 'fixed';
           image.style.top = '50%';
           image.style.left = '50%';
-          image.style.transform = 'translate(-50%, -50%)';
+          image.style.transform = 'translate(-50%, -50%) scale(0)';
           image.style.width = '200px';
           image.style.height = '200px';
-          image.style.zIndex = '2147483647'; // Maximum z-index value
+          image.style.zIndex = '2147483647';
           image.style.backgroundColor = 'white';
           image.style.borderRadius = '8px';
-          image.style.transition = 'opacity 1s';
+          image.style.transition = 'transform 0.5s ease, opacity 1s ease';
           image.style.opacity = '1';
           document.body.appendChild(image);
           setTimeout(() => {
+              image.style.transform = 'translate(-50%, -50%) scale(1)';
+          }, 100);
+          setTimeout(() => {
+              image.style.transform = 'translate(-50%, -50%) scale(0) rotate(360deg)';
               image.style.opacity = '0';
           }, 4000);
           setTimeout(() => {
