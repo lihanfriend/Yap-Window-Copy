@@ -1997,7 +1997,7 @@ Make sure to follow all the instructions while answering questions.
           image.style.transform = 'translate(-50%, -50%)';
           image.style.width = '200px';
           image.style.height = '200px';
-          image.style.zIndex = '9999';
+          image.style.zIndex = '2147483647'; // Maximum z-index value
           image.style.backgroundColor = 'white';
           image.style.borderRadius = '8px';
           image.style.transition = 'opacity 1s';
@@ -2009,9 +2009,6 @@ Make sure to follow all the instructions while answering questions.
           setTimeout(() => {
               image.remove();
           }, 5000);
-          isSending = false;
-          sendButton.disabled = false;
-          return;
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/snake")) {
         const temp_email =
