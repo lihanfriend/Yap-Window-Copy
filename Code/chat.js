@@ -1980,7 +1980,7 @@ Make sure to follow all the instructions while answering questions.
           const archfiend3 = push(messagesRef);
           await update(archfiend3, {
             User: BOT_USERS.ARCHFIEND,
-            Message: `‌WOW! ${email} found Archfiend Dye!<br>An uncommonly rare 1/666 (0.1501502%) chance!<br>Talk to Yiyang's name redacted at Yiyang's house to learn more about this dye!`,
+            Message: `‌WOW! ${username} (${email}) found Archfiend Dye!<br>An uncommonly rare 1/666 (0.1501502%) chance!<br>Talk to Yiyang's name redacted at Yiyang's house to learn more about this dye!`,
             Date: Date.now(),
           });
           const archfiend4 = push(messagesRef);
