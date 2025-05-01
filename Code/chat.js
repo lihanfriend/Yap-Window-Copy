@@ -2132,8 +2132,15 @@ Make sure to follow all the instructions while answering questions.
         function random(upto) {
           return Math.floor(Math.random() * upto);
         }
-
         async function tiggysay(mode) {
+          const pushMessage = async (text) => {
+            const msgRef = push(messagesRef);
+            await update(msgRef, {
+              User: "[Snake Game]",
+              Message: text,
+              Date: Date.now(),
+            });
+          };
           if (mode == "good") {
             const tiggydialogue = push(messagesRef);
             await update(tiggydialogue, {
