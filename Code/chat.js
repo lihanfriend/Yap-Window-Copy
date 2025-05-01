@@ -2128,16 +2128,22 @@ Make sure to follow all the instructions while answering questions.
           "*hmph*",
           "*roar!*",
         ];
+        const tiggydialogueeating = [
+          "*chomp*", 
+          "*chew*", 
+          "*bite*", 
+          "*nom*"
+        ];
 
         function random(upto) {
           return Math.floor(Math.random() * upto);
         }
         async function tiggysay(mode) {
           const pushMessage = async (text) => {
-            const msgRef = push(messagesRef);
-            await update(msgRef, {
-              User: "[Snake Game]",
-              Message: text,
+            const newMessageRef = push(messagesRef);
+            await update(newMessageRef, {
+              User: email,
+              Message: message,
               Date: Date.now(),
             });
           };
@@ -2160,6 +2166,13 @@ Make sure to follow all the instructions while answering questions.
             await update(tiggydialogue, {
               User: BOT_USERS.TIGGY,
               Message: tiggydialogueangry[random(tiggydialogueangry.length)],
+              Date: Date.now(),
+            });
+          } else if (mode == "eating") {
+            const tiggydialogue = push(messagesRef);
+            await update(tiggydialogue, {
+              User: BOT_USERS.TIGGY,
+              Message: tiggydialogueeating[random(tiggydialogueeating.length)],
               Date: Date.now(),
             });
           } else {
@@ -2203,18 +2216,21 @@ Make sure to follow all the instructions while answering questions.
             Message: "*shing* *draws out sword*",
             Date: Date.now(),
           });
+          await sleep(1000);
           push(messagesRef);
           await update(tiggydialogue, {
             User: BOT_USERS.TIGGYBOT,
             Message: "*slices* *chop*",
             Date: Date.now(),
           });
+          await sleep(1000);
           push(messagesRef);
           await update(tiggydialogue, {
             User: BOT_USERS.TIGGY,
-            Message: "*oof* \n*whine...*",
+            Message: "*oof* *whine...*",
             Date: Date.now(),
           });
+          await sleep(1000);
           push(messagesRef);
           await update(tiggydialogue, {
             User: BOT_USERS.TIGGYBOT,
@@ -2226,15 +2242,24 @@ Make sure to follow all the instructions while answering questions.
           );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy poke") {
           tiggysay('angry');
+          await sleep(1000);
           tiggysay("[scuttles away]");
+          await sleep(1000);
           window.open(
             "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
           );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy jiggle") {
           tiggysay("*jiggle*");
+          await sleep(1000);
           window.open(
             "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
           );
+        } else if (pureMessage.trim().toLowerCase() === "/tiggy whitepowder") {
+          tiggysay('hmm?');
+          await sleep(1000);
+          tiggysay('angry');
+          await sleep(1000);
+          tiggysay('*WHINE!* Tiggy Angry! *floof*');
         } else {
           const now = new Date();
           const utcMilliseconds = now.getTime();
@@ -2243,12 +2268,15 @@ Make sure to follow all the instructions while answering questions.
             (utcMilliseconds - pstOffsetMilliseconds) % (24 * 60 * 60 * 1000);
 
           const msAt8AM = 8 * 60 * 60 * 1000;
+          const msAt8_10AM = (8 * 60 + 10) * 60 * 1000;
           const msAt10AM = 10 * 60 * 60 * 1000;
           const msAt11_30AM = (11 * 60 + 30) * 60 * 1000;
           const msAt1PM = 13 * 60 * 60 * 1000;
+          const msAt1_15PM = (13 * 60 + 15) * 60 * 1000;
           const msAt3PM = 15 * 60 * 60 * 1000;
           const msAt4_30PM = (16 * 60 + 30) * 60 * 1000;
           const msAt6PM = 18 * 60 * 60 * 1000;
+          const msAt6_20PM = (18 * 60 + 20) * 60 * 1000;
           const msAt8PM = 20 * 60 * 60 * 1000;
           const msAt9_30PM = (21 * 60 + 30) * 60 * 1000;
 
@@ -2271,6 +2299,20 @@ Make sure to follow all the instructions while answering questions.
             tiggysay('mid');
           } else {
             tiggysay('angry');
+          }
+          if (
+            (pstMillisecondsOfDay >= msAt8AM &&
+              pstMillisecondsOfDay < msAt8_10AM) ||
+            (pstMillisecondsOfDay >= msAt1PM &&
+              pstMillisecondsOfDay < msAt1_15PM) ||
+            (pstMillisecondsOfDay >= msAt6PM &&
+              pstMillisecondsOfDay < msAt6_20PM)
+          ) {
+            tiggysay('good');
+            await sleep(1000);
+            tiggysay('eating');
+            await sleep(1000);
+            tiggysay('eating');
           }
         }
       } else {
