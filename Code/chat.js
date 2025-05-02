@@ -2643,7 +2643,8 @@ Make sure to follow all the instructions while answering questions.
             }, 5000);
           }
         }
-      } else if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
+      } 
+      if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
         async function jurorsay(juror, message) {
           if (juror == "J1") {
             const tam = push(messagesRef);
@@ -2803,7 +2804,8 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J12", "Not guilty.");
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
-      } else {
+      } 
+      else {
         const newMessageRef = push(messagesRef);
         await update(newMessageRef, {
           User: email,
