@@ -2508,10 +2508,6 @@ Make sure to follow all the instructions while answering questions.
         await sleep(1500);
         jurorsay("J4", "Not guilty.");
         await sleep(1500);
-        jurorsay("J1", "Juror 2?");
-        await sleep(1500);
-        jurorsay("J2", "Not guilty, sir.");
-        await sleep(1500);
         jurorsay("J1", "Juror 5?");
         await sleep(1500);
         jurorsay("J5", "Not guilty.");
