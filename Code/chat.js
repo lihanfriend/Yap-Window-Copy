@@ -1747,7 +1747,7 @@ function sleep(ms) {
         await update(userMessageRef, {
           User: email,
           Message: message,
-          Date: d,
+          Date: Date.now(),
         });
       if (pureMessage.trim().toLowerCase().startsWith("/ai ")) {
         const question = message.substring(4).trim();
