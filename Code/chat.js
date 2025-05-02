@@ -39,10 +39,16 @@ function sleep(ms) {
   }
 
   const sc = document.createElement("script");
-  sc.setAttribute("src", "https://cdn.jsdelivr.net/npm/emoji-toolkit@8.0.0/lib/js/joypixels.min.js");
+  sc.setAttribute(
+    "src",
+    "https://cdn.jsdelivr.net/npm/emoji-toolkit@8.0.0/lib/js/joypixels.min.js",
+  );
   document.head.appendChild(sc);
   const ss = document.createElement("stylesheet");
-  sc.setAttribute("href", "https://cdn.jsdelivr.net/npm/emoji-toolkit@8.0.0/extras/css/joypixels.min.css");
+  sc.setAttribute(
+    "href",
+    "https://cdn.jsdelivr.net/npm/emoji-toolkit@8.0.0/extras/css/joypixels.min.css",
+  );
   document.head.appendChild(ss);
 
   const gui = document.getElementById("bookmarklet-gui");
@@ -50,7 +56,10 @@ function sleep(ms) {
   chatScreen.classList.remove("hidden");
 
   async function initializeReadMessages() {
-    const readMessagesRef = ref(database, `Accounts/${email.replace(/\./g, "*")}/readMessages`);
+    const readMessagesRef = ref(
+      database,
+      `Accounts/${email.replace(/\./g, "*")}/readMessages`,
+    );
     const snapshot = await get(readMessagesRef);
     readMessages = snapshot.val() || {};
     return readMessages;
@@ -87,7 +96,8 @@ function sleep(ms) {
       return;
     }
 
-    const hasUnreadMessages = document.querySelector(".message.unread") !== null;
+    const hasUnreadMessages =
+      document.querySelector(".message.unread") !== null;
 
     if (!hasUnreadMessages) {
       return;
@@ -99,7 +109,8 @@ function sleep(ms) {
       const allMessages = Array.from(messagesDiv.children);
       const lastMessage = allMessages[allMessages.length - 1];
       if (lastMessage) {
-        const lastMessageId = lastMessage.dataset.lastMessageId || lastMessage.dataset.messageId;
+        const lastMessageId =
+          lastMessage.dataset.lastMessageId || lastMessage.dataset.messageId;
         if (lastMessageId) {
           await markMessagesAsRead(chatName, lastMessageId);
         }
@@ -122,14 +133,18 @@ function sleep(ms) {
         }
       }
 
-      if (lastReadMessageIndex !== -1 && lastReadMessageIndex < allMessages.length - 1) {
+      if (
+        lastReadMessageIndex !== -1 &&
+        lastReadMessageIndex < allMessages.length - 1
+      ) {
         return allMessages[lastReadMessageIndex + 1];
       }
 
       if (messagesDiv.scrollTop <= 5) {
         if (allMessages.length > 0) {
           const lastMessage = allMessages[allMessages.length - 1];
-          const lastMessageId = lastMessage.dataset.lastMessageId || lastMessage.dataset.messageId;
+          const lastMessageId =
+            lastMessage.dataset.lastMessageId || lastMessage.dataset.messageId;
           if (lastMessageId) {
             await markMessagesAsRead(chatName, lastMessageId);
           }
@@ -147,7 +162,8 @@ function sleep(ms) {
       if (messagesDiv.scrollHeight === oldScrollHeight) {
         if (allMessages.length > 0) {
           const lastMessage = allMessages[allMessages.length - 1];
-          const lastMessageId = lastMessage.dataset.lastMessageId || lastMessage.dataset.messageId;
+          const lastMessageId =
+            lastMessage.dataset.lastMessageId || lastMessage.dataset.messageId;
           if (lastMessageId) {
             await markMessagesAsRead(chatName, lastMessageId);
           }
@@ -162,7 +178,8 @@ function sleep(ms) {
     try {
       const firstUnreadMessage = await findFirstUnreadMessage();
       if (firstUnreadMessage) {
-        const targetPosition = firstUnreadMessage.offsetTop - messagesDiv.clientHeight / 3;
+        const targetPosition =
+          firstUnreadMessage.offsetTop - messagesDiv.clientHeight / 3;
 
         if (messagesDiv.scrollTop <= 5 && targetPosition > 5) {
           messagesDiv.scrollTop = 0;
@@ -214,7 +231,9 @@ function sleep(ms) {
     const currentUrl = window.location.href;
     const hasUnreadMessages = !readAll;
 
-    let link = document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+    let link = document.querySelector(
+      'link[rel="icon"], link[rel="shortcut icon"]',
+    );
     if (!link) {
       link = document.createElement("link");
       link.rel = "icon";
@@ -225,9 +244,11 @@ function sleep(ms) {
       let notificationIconPath;
 
       if (currentUrl.includes("lakesideschool.instructure.com")) {
-        iconUrl = "https://raw.githubusercontent.com/TheHumblePotato/Yap-Window/main/Favicon/CanvasNotification.png";
+        iconUrl =
+          "https://raw.githubusercontent.com/TheHumblePotato/Yap-Window/main/Favicon/CanvasNotification.png";
       } else if (currentUrl.includes("google.com")) {
-        iconUrl = "https://raw.githubusercontent.com/TheHumblePotato/Yap-Window/main/Favicon/GoogleNotification.png";
+        iconUrl =
+          "https://raw.githubusercontent.com/TheHumblePotato/Yap-Window/main/Favicon/GoogleNotification.png";
       }
 
       if (iconUrl) {
@@ -248,7 +269,10 @@ function sleep(ms) {
   }
 
   async function checkForUpdates() {
-    const userRef = ref(database, `Accounts/${email.replace(/\./g, "*")}/Version`);
+    const userRef = ref(
+      database,
+      `Accounts/${email.replace(/\./g, "*")}/Version`,
+    );
     const updatesRef = ref(database, "Updates");
 
     const userVersionSnapshot = await get(userRef);
@@ -259,7 +283,8 @@ function sleep(ms) {
       return;
     }
 
-    const userVersionData = userVersionSnapshot.val().replace("*", ".") || "1.0";
+    const userVersionData =
+      userVersionSnapshot.val().replace("*", ".") || "1.0";
     const updates = updatesSnapshot.val();
 
     const userVersion = userVersionData.split(".").map(Number);
@@ -292,7 +317,9 @@ function sleep(ms) {
     popup.style.color = isDark ? "#eaeaea" : "#333";
     popup.style.padding = "20px";
     popup.style.borderRadius = "8px";
-    popup.style.boxShadow = isDark ? "0 4px 8px rgba(0, 0, 0, 0.6)" : "0 4px 8px rgba(0, 0, 0, 0.1)";
+    popup.style.boxShadow = isDark
+      ? "0 4px 8px rgba(0, 0, 0, 0.6)"
+      : "0 4px 8px rgba(0, 0, 0, 0.1)";
     popup.style.zIndex = "100000";
     popup.style.maxWidth = "300px";
     popup.style.maxHeight = "250px";
@@ -331,7 +358,10 @@ function sleep(ms) {
     document.getElementById("chat-screen").appendChild(popup);
 
     const mostRecentVersion = newUpdates[newUpdates.length - 1];
-    set(ref(database, `Accounts/${email.replace(/\./g, "*")}/Version`), mostRecentVersion);
+    set(
+      ref(database, `Accounts/${email.replace(/\./g, "*")}/Version`),
+      mostRecentVersion,
+    );
   }
 
   async function fetchChatList() {
@@ -341,7 +371,9 @@ function sleep(ms) {
       const chatData = snapshot.val();
       if (chatData) {
         await populateSidebar(chatData);
-        const generalServer = Array.from(document.querySelectorAll(".server")).find((server) => server.textContent.trim() === "General");
+        const generalServer = Array.from(
+          document.querySelectorAll(".server"),
+        ).find((server) => server.textContent.trim() === "General");
         if (generalServer) {
           generalServer.classList.add("selected");
         }
@@ -364,9 +396,15 @@ function sleep(ms) {
 
     for (const [chatName, chatInfo] of Object.entries(chatData)) {
       const { Description, Members, Type } = chatInfo;
-      const memberList = Type === "Private" ? Members.split(",").map((m) => m.trim().replace(/\s+/g, "")) : [];
+      const memberList =
+        Type === "Private"
+          ? Members.split(",").map((m) => m.trim().replace(/\s+/g, ""))
+          : [];
 
-      if (Type === "Public" || (Type === "Private" && memberList.includes(email.replace(/\./g, "*")))) {
+      if (
+        Type === "Public" ||
+        (Type === "Private" && memberList.includes(email.replace(/\./g, "*")))
+      ) {
         const chatElement = document.createElement("div");
         chatElement.className = "server";
         chatElement.textContent = chatName;
@@ -384,7 +422,9 @@ function sleep(ms) {
         chatElement.appendChild(badge);
 
         chatElement.onclick = function () {
-          document.querySelectorAll(".server").forEach((s) => s.classList.remove("selected"));
+          document
+            .querySelectorAll(".server")
+            .forEach((s) => s.classList.remove("selected"));
           this.classList.add("selected");
           loadMessages(chatName);
           updateUnreadCount(chatName);
@@ -404,7 +444,10 @@ function sleep(ms) {
         let unreadCount = 0;
 
         Object.entries(messages).forEach(([messageId, message]) => {
-          if (message.User !== email && (!lastReadMessage || messageId > lastReadMessage)) {
+          if (
+            message.User !== email &&
+            (!lastReadMessage || messageId > lastReadMessage)
+          ) {
             unreadCount++;
           }
         });
@@ -429,12 +472,17 @@ function sleep(ms) {
     const snapshot = await get(chatRef);
     const messages = snapshot.val() || {};
 
-    const accountRef = ref(database, `Accounts/${email.replace(/\./g, "*")}/readMessages/${chatName}`);
+    const accountRef = ref(
+      database,
+      `Accounts/${email.replace(/\./g, "*")}/readMessages/${chatName}`,
+    );
     const lastReadSnapshot = await get(accountRef);
     const lastReadMessage = lastReadSnapshot.val() || "";
     let unreadCount = 0;
 
-    const sortedMessages = Object.entries(messages).sort(([, a], [, b]) => new Date(a.Date) - new Date(b.Date));
+    const sortedMessages = Object.entries(messages).sort(
+      ([, a], [, b]) => new Date(a.Date) - new Date(b.Date),
+    );
 
     let lastReadIndex = -1;
     sortedMessages.forEach(([messageId, message], index) => {
@@ -449,7 +497,9 @@ function sleep(ms) {
       }
     });
 
-    const chatElement = Array.from(document.querySelectorAll(".server")).find((el) => el.textContent.trim().includes(chatName.trim()));
+    const chatElement = Array.from(document.querySelectorAll(".server")).find(
+      (el) => el.textContent.trim().includes(chatName.trim()),
+    );
 
     if (chatElement) {
       const badge = chatElement.querySelector(".unread-badge");
@@ -484,7 +534,10 @@ function sleep(ms) {
 
     const formattedEmail = email.replace(/\./g, "*");
 
-    const lastInteractRef = ref(database, `Accounts/${formattedEmail}/LastInteract`);
+    const lastInteractRef = ref(
+      database,
+      `Accounts/${formattedEmail}/LastInteract`,
+    );
 
     try {
       const timestamp = Date.now();
@@ -509,9 +562,15 @@ function sleep(ms) {
     if (gui.controllers) {
       gui.controllers.forEach((controller) => {
         if (controller.domElement) {
-          controller.domElement.addEventListener("mousedown", () => trackUserInteraction());
-          controller.domElement.addEventListener("touchstart", () => trackUserInteraction());
-          controller.domElement.addEventListener("change", () => trackUserInteraction());
+          controller.domElement.addEventListener("mousedown", () =>
+            trackUserInteraction(),
+          );
+          controller.domElement.addEventListener("touchstart", () =>
+            trackUserInteraction(),
+          );
+          controller.domElement.addEventListener("change", () =>
+            trackUserInteraction(),
+          );
         }
       });
     }
@@ -537,7 +596,10 @@ function sleep(ms) {
       if (rightUserSidebar.classList.contains("visible")) {
         updateUserActivityList();
 
-        window.userActivityInterval = setInterval(updateUserActivityList, 60000);
+        window.userActivityInterval = setInterval(
+          updateUserActivityList,
+          60000,
+        );
       } else {
         clearInterval(window.userActivityInterval);
       }
@@ -659,7 +721,10 @@ function sleep(ms) {
 
   async function getUsernameFromEmail(userEmail) {
     if (!userEmail) return "";
-    if (["[AI]", "[EOD]", "[RNG]", "[ADMIN]", "[Snake Game]"].includes(userEmail)) return userEmail;
+    if (
+      ["[AI]", "[EOD]", "[RNG]", "[ADMIN]", "[Snake Game]"].includes(userEmail)
+    )
+      return userEmail;
     const formattedEmail = userEmail.replace(/\./g, "*");
     const userRef = ref(database, `Accounts/${formattedEmail}/Username`);
     try {
@@ -702,19 +767,31 @@ function sleep(ms) {
 
     function logMessageOrder(messages, label) {}
     messagesDiv.addEventListener("scroll", async () => {
-      if (messagesDiv.scrollTop <= 100 && !isLoadingMore && loadedMessages.length > 0) {
+      if (
+        messagesDiv.scrollTop <= 100 &&
+        !isLoadingMore &&
+        loadedMessages.length > 0
+      ) {
         isLoadingMore = true;
 
         const oldestDisplayedMessage = messagesDiv.firstChild;
-        if (oldestDisplayedMessage && oldestDisplayedMessage.dataset.messageId) {
+        if (
+          oldestDisplayedMessage &&
+          oldestDisplayedMessage.dataset.messageId
+        ) {
           const oldestDisplayedId = oldestDisplayedMessage.dataset.messageId;
-          const oldestDisplayedIndex = loadedMessages.findIndex((msg) => msg.id === oldestDisplayedId);
+          const oldestDisplayedIndex = loadedMessages.findIndex(
+            (msg) => msg.id === oldestDisplayedId,
+          );
 
           if (oldestDisplayedIndex > 0) {
             const oldScrollHeight = messagesDiv.scrollHeight;
             const oldScrollTop = messagesDiv.scrollTop;
 
-            const olderMessages = loadedMessages.slice(Math.max(0, oldestDisplayedIndex - MESSAGES_PER_LOAD), oldestDisplayedIndex);
+            const olderMessages = loadedMessages.slice(
+              Math.max(0, oldestDisplayedIndex - MESSAGES_PER_LOAD),
+              oldestDisplayedIndex,
+            );
 
             for (let i = olderMessages.length - 1; i >= 0; i--) {
               await appendSingleMessage(olderMessages[i], true);
@@ -735,8 +812,16 @@ function sleep(ms) {
       const messageDate = new Date(dateString);
       const now = new Date();
 
-      const messageMidnight = new Date(messageDate.getFullYear(), messageDate.getMonth(), messageDate.getDate());
-      const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      const messageMidnight = new Date(
+        messageDate.getFullYear(),
+        messageDate.getMonth(),
+        messageDate.getDate(),
+      );
+      const todayMidnight = new Date(
+        now.getFullYear(),
+        now.getMonth(),
+        now.getDate(),
+      );
 
       const diffTime = todayMidnight - messageMidnight;
       const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
@@ -766,7 +851,11 @@ function sleep(ms) {
       const username = message.User;
       const lastReadMessage = readMessages[chatName] || "";
 
-      const wasNearBottom = messagesDiv.scrollHeight - messagesDiv.scrollTop - messagesDiv.clientHeight <= 20;
+      const wasNearBottom =
+        messagesDiv.scrollHeight -
+          messagesDiv.scrollTop -
+          messagesDiv.clientHeight <=
+        20;
 
       let adjacentMessageDiv = null;
       const timeThreshold = 5 * 60 * 1000;
@@ -776,7 +865,8 @@ function sleep(ms) {
         if (
           firstMessage &&
           firstMessage.dataset.user === username &&
-          Math.abs(new Date(firstMessage.dataset.date) - messageDate) < timeThreshold
+          Math.abs(new Date(firstMessage.dataset.date) - messageDate) <
+            timeThreshold
         ) {
           adjacentMessageDiv = firstMessage;
         }
@@ -785,7 +875,8 @@ function sleep(ms) {
         if (
           lastMessage &&
           lastMessage.dataset.user === username &&
-          Math.abs(new Date(lastMessage.dataset.date) - messageDate) < timeThreshold
+          Math.abs(new Date(lastMessage.dataset.date) - messageDate) <
+            timeThreshold
         ) {
           adjacentMessageDiv = lastMessage;
         }
@@ -798,12 +889,18 @@ function sleep(ms) {
 
         adjacentMessageDiv.dataset.lastMessageId = message.id;
 
-        if (message.User !== email && (!lastReadMessage || message.id > lastReadMessage)) {
+        if (
+          message.User !== email &&
+          (!lastReadMessage || message.id > lastReadMessage)
+        ) {
           adjacentMessageDiv.classList.add("unread");
         }
         const mentions = messageContent.querySelectorAll(".mention");
         mentions.forEach((mention) => {
-          if (mention.dataset.email === email || mention.dataset.email === "Everyone") {
+          if (
+            mention.dataset.email === email ||
+            mention.dataset.email === "Everyone"
+          ) {
             mention.classList.add("highlight");
           }
         });
@@ -858,7 +955,10 @@ function sleep(ms) {
 
         const mentions = messageContent.querySelectorAll(".mention");
         mentions.forEach((mention) => {
-          if (mention.dataset.email === email || mention.dataset.email === "Everyone") {
+          if (
+            mention.dataset.email === email ||
+            mention.dataset.email === "Everyone"
+          ) {
             mention.classList.add("highlight");
           }
         });
@@ -917,7 +1017,9 @@ function sleep(ms) {
 
           if (lastDisplayedMessage) {
             const lastMessageId = lastDisplayedMessage.dataset.lastMessageId;
-            const lastMessageIndex = sortedMessages.findIndex((msg) => msg.id === lastMessageId);
+            const lastMessageIndex = sortedMessages.findIndex(
+              (msg) => msg.id === lastMessageId,
+            );
 
             if (lastMessageIndex !== -1) {
               const newMessages = sortedMessages.slice(lastMessageIndex + 1);
@@ -925,7 +1027,11 @@ function sleep(ms) {
                 await appendSingleMessage(message, false);
               }
 
-              const wasNearBottom = messagesDiv.scrollHeight - messagesDiv.scrollTop - messagesDiv.clientHeight <= 20;
+              const wasNearBottom =
+                messagesDiv.scrollHeight -
+                  messagesDiv.scrollTop -
+                  messagesDiv.clientHeight <=
+                20;
               if (wasNearBottom) {
                 requestAnimationFrame(() => {
                   messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -939,7 +1045,9 @@ function sleep(ms) {
   }
 
   async function markMessagesAsRead(chatName, messageId) {
-    const messageElement = document.querySelector(`[data-message-id="${messageId}"]`);
+    const messageElement = document.querySelector(
+      `[data-message-id="${messageId}"]`,
+    );
     if (!messageElement) return;
 
     const lastMessageId = messageElement.dataset.lastMessageId;
@@ -950,7 +1058,10 @@ function sleep(ms) {
 
     readMessages[chatName] = lastMessageId;
 
-    const readMessagesRef = ref(database, `Accounts/${email.replace(/\./g, "*")}/readMessages/${chatName}`);
+    const readMessagesRef = ref(
+      database,
+      `Accounts/${email.replace(/\./g, "*")}/readMessages/${chatName}`,
+    );
     await set(readMessagesRef, lastMessageId);
 
     document.querySelectorAll(".message").forEach((msg) => {
@@ -965,7 +1076,8 @@ function sleep(ms) {
   }
 
   function createSnakeGame() {
-    const temp_email = typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
+    const temp_email =
+      typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
 
     const gameContainer = document.createElement("div");
     gameContainer.id = "snake-game-container";
@@ -1121,7 +1233,9 @@ function sleep(ms) {
 
     function tryLoadHighScore() {
       try {
-        const storedHighScore = localStorage.getItem(`snakeHighScore_${temp_email}`);
+        const storedHighScore = localStorage.getItem(
+          `snakeHighScore_${temp_email}`,
+        );
         if (storedHighScore) {
           highScore = parseInt(storedHighScore);
           highScoreDisplay.textContent = `High Score: ${highScore}`;
@@ -1131,7 +1245,11 @@ function sleep(ms) {
       }
 
       try {
-        if (typeof database !== "undefined" && typeof ref !== "undefined" && typeof get !== "undefined") {
+        if (
+          typeof database !== "undefined" &&
+          typeof ref !== "undefined" &&
+          typeof get !== "undefined"
+        ) {
           const scoreRef = ref(database, `SnakeScores/${temp_email}`);
           get(scoreRef)
             .then((snapshot) => {
@@ -1144,7 +1262,10 @@ function sleep(ms) {
               }
             })
             .catch((error) => {
-              console.error("Error retrieving high score from Firebase:", error);
+              console.error(
+                "Error retrieving high score from Firebase:",
+                error,
+              );
             });
         }
       } catch (error) {
@@ -1303,13 +1424,20 @@ function sleep(ms) {
         highScore = score;
 
         try {
-          localStorage.setItem(`snakeHighScore_${temp_email}`, highScore.toString());
+          localStorage.setItem(
+            `snakeHighScore_${temp_email}`,
+            highScore.toString(),
+          );
         } catch (e) {
           console.warn("Could not save to localStorage:", e);
         }
 
         try {
-          if (typeof database !== "undefined" && typeof ref !== "undefined" && typeof set !== "undefined") {
+          if (
+            typeof database !== "undefined" &&
+            typeof ref !== "undefined" &&
+            typeof set !== "undefined"
+          ) {
             const scoreRef = ref(database, `SnakeScores/${temp_email}`);
             set(scoreRef, highScore).catch((error) => {
               console.error("Error saving high score to Firebase:", error);
@@ -1334,15 +1462,27 @@ function sleep(ms) {
       ctx.fillText("Game Over!", canvas.width / 2, canvas.height / 2 - 40);
 
       ctx.font = "24px Arial";
-      ctx.fillText(`Final Score: ${score}`, canvas.width / 2, canvas.height / 2);
+      ctx.fillText(
+        `Final Score: ${score}`,
+        canvas.width / 2,
+        canvas.height / 2,
+      );
 
       if (score > highScore) {
         saveHighScore();
         ctx.fillStyle = "gold";
-        ctx.fillText("New High Score!", canvas.width / 2, canvas.height / 2 + 40);
+        ctx.fillText(
+          "New High Score!",
+          canvas.width / 2,
+          canvas.height / 2 + 40,
+        );
       } else {
         ctx.fillStyle = "white";
-        ctx.fillText(`High Score: ${highScore}`, canvas.width / 2, canvas.height / 2 + 40);
+        ctx.fillText(
+          `High Score: ${highScore}`,
+          canvas.width / 2,
+          canvas.height / 2 + 40,
+        );
       }
 
       const closeButton = document.createElement("button");
@@ -1504,16 +1644,27 @@ function sleep(ms) {
       if (target) {
         e.preventDefault();
         const fileData = decodeURIComponent(target.getAttribute("data-file"));
-        const fileName = decodeURIComponent(target.getAttribute("data-filename") || "file");
-        const mimeType = decodeURIComponent(target.getAttribute("data-mime") || "");
+        const fileName = decodeURIComponent(
+          target.getAttribute("data-filename") || "file",
+        );
+        const mimeType = decodeURIComponent(
+          target.getAttribute("data-mime") || "",
+        );
         window.openFileViewer(fileData, fileName, mimeType);
       }
     });
 
     document.addEventListener("click", function (e) {
-      if (e.target.tagName === "IMG" && e.target.src.startsWith("data:image/")) {
+      if (
+        e.target.tagName === "IMG" &&
+        e.target.src.startsWith("data:image/")
+      ) {
         e.preventDefault();
-        window.openFileViewer(e.target.src, "image", e.target.src.split(",")[0].split(":")[1].split(";")[0]);
+        window.openFileViewer(
+          e.target.src,
+          "image",
+          e.target.src.split(",")[0].split(":")[1].split(";")[0],
+        );
       }
     });
   }
@@ -1524,9 +1675,13 @@ function sleep(ms) {
     sendButton.disabled = true;
     removeFakeHighlights();
     const messagesRef = ref(database, `Chats/${currentChat}`);
-    let message = document.getElementById("message-input").innerHTML.substring(0, 5000);
+    let message = document
+      .getElementById("message-input")
+      .innerHTML.substring(0, 5000);
 
-    let textContent = document.getElementById("message-input").textContent.substring(0, 5000);
+    let textContent = document
+      .getElementById("message-input")
+      .textContent.substring(0, 5000);
 
     if (!textContent.trim() && attachments.length === 0) {
       isSending = false;
@@ -1534,7 +1689,9 @@ function sleep(ms) {
       return;
     }
 
-    let pureMessage = document.getElementById("message-input").textContent.substring(0, 2500);
+    let pureMessage = document
+      .getElementById("message-input")
+      .textContent.substring(0, 2500);
 
     noFilesMessage = message;
 
@@ -1647,7 +1804,8 @@ Make sure to follow all the instructions while answering questions.
         for (const API_KEY of API_KEYS) {
           try {
             const response = await fetch(
-              "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY,
+              "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" +
+                API_KEY,
               {
                 method: "POST",
                 headers: {
@@ -1668,7 +1826,8 @@ Make sure to follow all the instructions while answering questions.
               },
             ).then((res) => res.json());
 
-            const responseText = response.candidates?.[0]?.content?.parts?.[0]?.text;
+            const responseText =
+              response.candidates?.[0]?.content?.parts?.[0]?.text;
             if (responseText && responseText.trim() !== "") {
               aiReply = responseText;
               successfulRequest = true;
@@ -1680,7 +1839,8 @@ Make sure to follow all the instructions while answering questions.
         }
 
         if (!successfulRequest) {
-          aiReply = "Sorry, AI assistance is temporarily unavailable. Please try again later.";
+          aiReply =
+            "Sorry, AI assistance is temporarily unavailable. Please try again later.";
         }
 
         const aiMessageRef = push(messagesRef);
@@ -1808,14 +1968,14 @@ Make sure to follow all the instructions while answering questions.
         } else {
           result = Math.floor(Math.random() * sides) + 1;
         }
-          
+
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: BOT_USERS.RNG,
           Message: `🎲 Rolling a ${sides}-sided die: ${result}`,
           Date: Date.now(),
         });
-          
+
         if (result == 7) {
           await sleep(1000);
           const archfiend1 = push(messagesRef);
@@ -1845,7 +2005,8 @@ Make sure to follow all the instructions while answering questions.
             Date: Date.now(),
           });
           const image = document.createElement("img");
-          image.src = "https://i.postimg.cc/8PmBs93W/archfiend-removebg-preview.png";
+          image.src =
+            "https://i.postimg.cc/8PmBs93W/archfiend-removebg-preview.png";
           image.style.position = "fixed";
           image.style.top = "50%";
           image.style.left = "50%";
@@ -1862,7 +2023,8 @@ Make sure to follow all the instructions while answering questions.
             image.style.transform = "translate(-50%, -50%) scale(1)";
           }, 100);
           setTimeout(() => {
-            image.style.transform = "translate(-50%, -50%) scale(0) rotate(360deg)";
+            image.style.transform =
+              "translate(-50%, -50%) scale(0) rotate(360deg)";
             image.style.opacity = "0";
           }, 4000);
           setTimeout(() => {
@@ -1870,7 +2032,10 @@ Make sure to follow all the instructions while answering questions.
           }, 5000);
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/snake")) {
-        const temp_email = typeof email !== "undefined" ? email.replace(/\./g, "*") : "anonymous";
+        const temp_email =
+          typeof email !== "undefined"
+            ? email.replace(/\./g, "*")
+            : "anonymous";
         if (pureMessage.trim().toLowerCase() === "/snake leaderboard") {
           const userMessageRef = push(messagesRef);
           await update(userMessageRef, {
@@ -1891,9 +2056,13 @@ Make sure to follow all the instructions while answering questions.
               }))
               .sort((a, b) => b.score - a.score);
 
-            let currentUserRank = sortedScores.findIndex((entry) => entry.email === temp_email);
-            let currentUserScore = currentUserRank !== -1 ? sortedScores[currentUserRank].score : 0;
-            currentUserRank = currentUserRank !== -1 ? currentUserRank + 1 : "-";
+            let currentUserRank = sortedScores.findIndex(
+              (entry) => entry.email === temp_email,
+            );
+            let currentUserScore =
+              currentUserRank !== -1 ? sortedScores[currentUserRank].score : 0;
+            currentUserRank =
+              currentUserRank !== -1 ? currentUserRank + 1 : "-";
 
             const pushMessage = async (text) => {
               const msgRef = push(messagesRef);
@@ -1940,7 +2109,12 @@ Make sure to follow all the instructions while answering questions.
           const schoolEnd = 920;
           const currentTime = hour * 60 + minute;
 
-          if (day >= 1 && day <= 5 && currentTime >= schoolStart && currentTime <= schoolEnd) {
+          if (
+            day >= 1 &&
+            day <= 5 &&
+            currentTime >= schoolStart &&
+            currentTime <= schoolEnd
+          ) {
             const errorMessageRef = push(messagesRef);
             await update(errorMessageRef, {
               User: "[Snake Game]",
@@ -1958,9 +2132,25 @@ Make sure to follow all the instructions while answering questions.
           Message: message,
           Date: Date.now(),
         });
-        const tiggydialoguehappy = ["*whine!*", "*whine, tiggy!*", "*roar*", "*whine?*", "*boop*"];
-        const tiggydialoguemid = ["*whine*", "*hmm...*", "*whine.*", "*squeak* [scuttles away]"];
-        const tiggydialogueangry = ["*grrr*", "*whineee!!!!*", "*hmph*", "*roar!*"];
+        const tiggydialoguehappy = [
+          "*whine!*",
+          "*whine, tiggy!*",
+          "*roar*",
+          "*whine?*",
+          "*boop*",
+        ];
+        const tiggydialoguemid = [
+          "*whine*",
+          "*hmm...*",
+          "*whine.*",
+          "*squeak* [scuttles away]",
+        ];
+        const tiggydialogueangry = [
+          "*grrr*",
+          "*whineee!!!!*",
+          "*hmph*",
+          "*roar!*",
+        ];
         const tiggydialogueeating = ["*chomp*", "*chew*", "*bite*", "*nom*"];
 
         function random(upto) {
@@ -2021,10 +2211,14 @@ Make sure to follow all the instructions while answering questions.
           const tiggydialogue = push(messagesRef);
           await update(tiggydialogue, {
             User: BOT_USERS.TIGGY,
-            Message: tiggydialoguehappy[random(tiggydialoguehappy.length)] + tiggydialoguehappy[random(tiggydialoguehappy.length)],
+            Message:
+              tiggydialoguehappy[random(tiggydialoguehappy.length)] +
+              tiggydialoguehappy[random(tiggydialoguehappy.length)],
             Date: Date.now(),
           });
-          window.open("https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg");
+          window.open(
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy decapitate") {
           const tiggydialogue = push(messagesRef);
           await update(tiggydialogue, {
@@ -2053,17 +2247,23 @@ Make sure to follow all the instructions while answering questions.
             Message: "Another Tiggy comes, seeing the chopped Tiggy.",
             Date: Date.now(),
           });
-          window.open("https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg");
+          window.open(
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy poke") {
           tiggysay("angry");
           await sleep(1000);
           tiggysay("[scuttles away]");
           await sleep(1000);
-          window.open("https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg");
+          window.open(
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy jiggle") {
           tiggysay("*jiggle*");
           await sleep(1000);
-          window.open("https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg");
+          window.open(
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy whitepowder") {
           tiggysay("hmm?");
           await sleep(1000);
@@ -2074,7 +2274,8 @@ Make sure to follow all the instructions while answering questions.
           const now = new Date();
           const utcMilliseconds = now.getTime();
           const pstOffsetMilliseconds = 7 * 60 * 60 * 1000;
-          const pstMillisecondsOfDay = (utcMilliseconds - pstOffsetMilliseconds) % (24 * 60 * 60 * 1000);
+          const pstMillisecondsOfDay =
+            (utcMilliseconds - pstOffsetMilliseconds) % (24 * 60 * 60 * 1000);
 
           const msAt8AM = 8 * 60 * 60 * 1000;
           const msAt8_10AM = (8 * 60 + 10) * 60 * 1000;
@@ -2090,9 +2291,12 @@ Make sure to follow all the instructions while answering questions.
           const msAt9_30PM = (21 * 60 + 30) * 60 * 1000;
 
           if (
-            (pstMillisecondsOfDay >= msAt8_10AM && pstMillisecondsOfDay < msAt10AM) ||
-            (pstMillisecondsOfDay >= msAt1_15PM && pstMillisecondsOfDay < msAt3PM) ||
-            (pstMillisecondsOfDay >= msAt6_20PM && pstMillisecondsOfDay < msAt8PM)
+            (pstMillisecondsOfDay >= msAt8_10AM &&
+              pstMillisecondsOfDay < msAt10AM) ||
+            (pstMillisecondsOfDay >= msAt1_15PM &&
+              pstMillisecondsOfDay < msAt3PM) ||
+            (pstMillisecondsOfDay >= msAt6_20PM &&
+              pstMillisecondsOfDay < msAt8PM)
           ) {
             tiggysay("good");
             const createHeart = () => {
@@ -2130,7 +2334,8 @@ Make sure to follow all the instructions while answering questions.
             };
 
             const image = document.createElement("img");
-            image.src = "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+            image.src =
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
             image.style.position = "fixed";
             image.style.top = "50%";
             image.style.left = "50%";
@@ -2150,7 +2355,8 @@ Make sure to follow all the instructions while answering questions.
             }, 100);
 
             setTimeout(() => {
-              image.style.transform = "translate(-50%, -50%) scale(0) rotate(360deg)";
+              image.style.transform =
+                "translate(-50%, -50%) scale(0) rotate(360deg)";
               image.style.opacity = "0";
             }, 4000);
 
@@ -2158,9 +2364,12 @@ Make sure to follow all the instructions while answering questions.
               image.remove();
             }, 5000);
           } else if (
-            (pstMillisecondsOfDay >= msAt10AM && pstMillisecondsOfDay < msAt11_30AM) ||
-            (pstMillisecondsOfDay >= msAt3PM && pstMillisecondsOfDay < msAt4_30PM) ||
-            (pstMillisecondsOfDay >= msAt8PM && pstMillisecondsOfDay < msAt9_30PM)
+            (pstMillisecondsOfDay >= msAt10AM &&
+              pstMillisecondsOfDay < msAt11_30AM) ||
+            (pstMillisecondsOfDay >= msAt3PM &&
+              pstMillisecondsOfDay < msAt4_30PM) ||
+            (pstMillisecondsOfDay >= msAt8PM &&
+              pstMillisecondsOfDay < msAt9_30PM)
           ) {
             tiggysay("mid");
             const createFullSpinEffect = (element) => {
@@ -2184,12 +2393,14 @@ Make sure to follow all the instructions while answering questions.
 
               setTimeout(() => {
                 clearInterval(spinInterval);
-                element.style.transform = "translate(-50%, -50%) scale(1) rotate(360deg)";
+                element.style.transform =
+                  "translate(-50%, -50%) scale(1) rotate(360deg)";
               }, 2000);
             };
 
             const image = document.createElement("img");
-            image.src = "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+            image.src =
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
             image.style.position = "fixed";
             image.style.top = "50%";
             image.style.left = "50%";
@@ -2209,7 +2420,8 @@ Make sure to follow all the instructions while answering questions.
             }, 100);
 
             setTimeout(() => {
-              image.style.transform = "translate(-50%, -50%) scale(0) rotate(720deg)";
+              image.style.transform =
+                "translate(-50%, -50%) scale(0) rotate(720deg)";
               image.style.opacity = "0";
             }, 4000);
 
@@ -2217,22 +2429,27 @@ Make sure to follow all the instructions while answering questions.
               image.remove();
             }, 5000);
           } else if (
-            (pstMillisecondsOfDay >= msAt8AM && pstMillisecondsOfDay < msAt8_10AM) ||
-            (pstMillisecondsOfDay >= msAt1PM && pstMillisecondsOfDay < msAt1_15PM) ||
-            (pstMillisecondsOfDay >= msAt6PM && pstMillisecondsOfDay < msAt6_20PM)
+            (pstMillisecondsOfDay >= msAt8AM &&
+              pstMillisecondsOfDay < msAt8_10AM) ||
+            (pstMillisecondsOfDay >= msAt1PM &&
+              pstMillisecondsOfDay < msAt1_15PM) ||
+            (pstMillisecondsOfDay >= msAt6PM &&
+              pstMillisecondsOfDay < msAt6_20PM)
           ) {
             tiggysay("good");
             const container = document.createElement("div");
             container.style.position = "fixed";
             container.style.top = "50%";
             container.style.left = "50%";
-            container.style.transform = "translate(-50%, -50%) scale(0) rotate(0deg)";
+            container.style.transform =
+              "translate(-50%, -50%) scale(0) rotate(0deg)";
             container.style.zIndex = "2147483647";
             container.style.padding = "20px";
             container.style.backgroundColor = "#b6fcb6";
             container.style.borderRadius = "20px";
             container.style.boxShadow = "0 0 30px 10px #8feca8";
-            container.style.transition = "transform 1s ease-in-out, opacity 1s ease";
+            container.style.transition =
+              "transform 1s ease-in-out, opacity 1s ease";
             container.style.opacity = "1";
             container.style.display = "flex";
             container.style.justifyContent = "center";
@@ -2240,42 +2457,64 @@ Make sure to follow all the instructions while answering questions.
             document.body.appendChild(container);
 
             const image = document.createElement("img");
-            image.src = "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+            image.src =
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
             image.style.width = "200px";
             image.style.height = "200px";
             image.style.borderRadius = "12px";
             container.appendChild(image);
 
             setTimeout(() => {
-              container.style.transform = "translate(-50%, -50%) scale(1.2) rotate(360deg)";
+              container.style.transform =
+                "translate(-50%, -50%) scale(1.2) rotate(360deg)";
             }, 100);
 
             setTimeout(() => {
               container.style.transition = "transform 2s ease-in-out";
-              container.style.transform = "translate(-50%, -50%) scale(1) rotate(1080deg)";
+              container.style.transform =
+                "translate(-50%, -50%) scale(1) rotate(1080deg)";
             }, 1500);
 
             setTimeout(() => {
               container.style.transition = "transform 1s ease, opacity 1s ease";
-              container.style.transform = "translate(-50%, -50%) scale(0) rotate(1440deg)";
+              container.style.transform =
+                "translate(-50%, -50%) scale(0) rotate(1440deg)";
               container.style.opacity = "0";
             }, 5000);
 
             setTimeout(() => {
               container.remove();
             }, 6000);
-            const foodEmojis = ["🍕", "🍔", "🍟", "🌮", "🍣", "🍩", "🍪", "🍉", "🍇", "🍓", "🍦", "🍫", "🧁", "🥑", "🥞"];
+            const foodEmojis = [
+              "🍕",
+              "🍔",
+              "🍟",
+              "🌮",
+              "🍣",
+              "🍩",
+              "🍪",
+              "🍉",
+              "🍇",
+              "🍓",
+              "🍦",
+              "🍫",
+              "🧁",
+              "🥑",
+              "🥞",
+            ];
 
             for (let i = 0; i < 50; i++) {
               const emoji = document.createElement("div");
-              emoji.innerText = foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
+              emoji.innerText =
+                foodEmojis[Math.floor(Math.random() * foodEmojis.length)];
               emoji.style.position = "fixed";
               emoji.style.fontSize = `${24 + Math.random() * 36}px`;
               emoji.style.left = `${Math.random() * 100}%`;
               emoji.style.top = `${Math.random() * 100}%`;
               emoji.style.zIndex = "2147483646";
               emoji.style.opacity = "0";
-              emoji.style.transition = "transform 6s ease-out, opacity 1s ease-in-out";
+              emoji.style.transition =
+                "transform 6s ease-out, opacity 1s ease-in-out";
               emoji.style.pointerEvents = "none";
               emoji.style.animation = "pulse 2s infinite ease-in-out";
 
@@ -2312,7 +2551,17 @@ Make sure to follow all the instructions while answering questions.
             const createAngryHungryEffect = (element) => {
               let angle = 0;
               const boltsAndFood = [];
-              const foodEmojis = ["🍔", "🍕", "🌭", "🍩", "🍟", "🍗", "🥪", "🍎", "🍫"];
+              const foodEmojis = [
+                "🍔",
+                "🍕",
+                "🌭",
+                "🍩",
+                "🍟",
+                "🍗",
+                "🥪",
+                "🍎",
+                "🍫",
+              ];
 
               const createEmoji = (emoji, color) => {
                 const emojiElement = document.createElement("div");
@@ -2347,7 +2596,10 @@ Make sure to follow all the instructions while answering questions.
               const interval = setInterval(() => {
                 shake();
                 createEmoji("⚡", "yellow");
-                createEmoji(foodEmojis[Math.floor(Math.random() * foodEmojis.length)], "white");
+                createEmoji(
+                  foodEmojis[Math.floor(Math.random() * foodEmojis.length)],
+                  "white",
+                );
               }, 100);
 
               setTimeout(() => {
@@ -2357,7 +2609,8 @@ Make sure to follow all the instructions while answering questions.
             };
 
             const image = document.createElement("img");
-            image.src = "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+            image.src =
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
             image.style.position = "fixed";
             image.style.top = "50%";
             image.style.left = "50%";
@@ -2368,7 +2621,8 @@ Make sure to follow all the instructions while answering questions.
             image.style.backgroundColor = "red";
             image.style.borderRadius = "8px";
             image.style.boxShadow = "0 0 20px 5px rgba(255, 0, 0, 0.7)";
-            image.style.transition = "transform 0.5s ease, opacity 1s ease, background-color 0.2s";
+            image.style.transition =
+              "transform 0.5s ease, opacity 1s ease, background-color 0.2s";
             image.style.opacity = "1";
             document.body.appendChild(image);
 
@@ -2379,7 +2633,8 @@ Make sure to follow all the instructions while answering questions.
             }, 100);
 
             setTimeout(() => {
-              image.style.transform = "translate(-50%, -50%) scale(0) rotate(360deg)";
+              image.style.transform =
+                "translate(-50%, -50%) scale(0) rotate(360deg)";
               image.style.opacity = "0";
             }, 4000);
 
@@ -2490,7 +2745,10 @@ Make sure to follow all the instructions while answering questions.
             Date: Date.now(),
           });
         }
-        jurorsay("J1", "Ok, settle down, everyone. A vote has been called for.");
+        jurorsay(
+          "J1",
+          "Ok, settle down, everyone. A vote has been called for.",
+        );
         await sleep(1000);
         jurorsay("J1", "We'll vote by juror name. Juror 1?");
         await sleep(500);
@@ -2520,7 +2778,10 @@ Make sure to follow all the instructions while answering questions.
         await sleep(1500);
         jurorsay("J1", "Juror 7?");
         await sleep(1500);
-        jurorsay("J7", "*leans back on chair* Not guilty, get this business finished with!");
+        jurorsay(
+          "J7",
+          "*leans back on chair* Not guilty, get this business finished with!",
+        );
         await sleep(1500);
         jurorsay("J1", "Juror 8?");
         await sleep(1500);
@@ -2553,19 +2814,18 @@ Make sure to follow all the instructions while answering questions.
       }
     }
 
-      const snapshot = await get(messagesRef);
-      const messages = snapshot.val() || {};
+    const snapshot = await get(messagesRef);
+    const messages = snapshot.val() || {};
 
-      const allMessageIds = Object.keys(messages).sort();
-      if (allMessageIds.length > 0) {
-        const latestMessageId = allMessageIds[allMessageIds.length - 1];
-        await markMessagesAsRead(currentChat, latestMessageId);
-      }
+    const allMessageIds = Object.keys(messages).sort();
+    if (allMessageIds.length > 0) {
+      const latestMessageId = allMessageIds[allMessageIds.length - 1];
+      await markMessagesAsRead(currentChat, latestMessageId);
     }
-    document.getElementById("bookmarklet-gui").scrollTop = 0;
-    isSending = false;
-    sendButton.disabled = false;
   }
+  document.getElementById("bookmarklet-gui").scrollTop = 0;
+  isSending = false;
+  sendButton.disabled = false;
 
   function formatDate(timestamp) {
     const messageDate = new Date(timestamp);
@@ -2604,28 +2864,35 @@ Make sure to follow all the instructions while answering questions.
     }
   });
 
-  document.getElementById("message-input").addEventListener("input", function (e) {
-    if (e.inputType === "insertFromPaste" || (e.inputType === "insertText" && (e.data === " " || e.data === "\n"))) {
-      const selection = window.getSelection();
-      const range = selection.getRangeAt(0);
+  document
+    .getElementById("message-input")
+    .addEventListener("input", function (e) {
+      if (
+        e.inputType === "insertFromPaste" ||
+        (e.inputType === "insertText" && (e.data === " " || e.data === "\n"))
+      ) {
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
 
-      const messageInput = document.getElementById("message-input");
-      const preCaretRange = range.cloneRange();
-      preCaretRange.selectNodeContents(messageInput);
-      preCaretRange.setEnd(range.endContainer, range.endOffset);
-      const caretPosition = preCaretRange.toString().length;
+        const messageInput = document.getElementById("message-input");
+        const preCaretRange = range.cloneRange();
+        preCaretRange.selectNodeContents(messageInput);
+        preCaretRange.setEnd(range.endContainer, range.endOffset);
+        const caretPosition = preCaretRange.toString().length;
 
-      processLinksInInput();
+        processLinksInInput();
 
-      let message = document.getElementById("message-input").innerHTML.substring(0, 2500);
+        let message = document
+          .getElementById("message-input")
+          .innerHTML.substring(0, 2500);
 
-      message = joypixels.shortnameToImage(message);
+        message = joypixels.shortnameToImage(message);
 
-      setTimeout(() => {
-        setCursorPositionInContentEditable(messageInput, caretPosition);
-      }, 0);
-    }
-  });
+        setTimeout(() => {
+          setCursorPositionInContentEditable(messageInput, caretPosition);
+        }, 0);
+      }
+    });
 
   function setCursorPositionInContentEditable(element, position) {
     const textNodeMapping = [];
@@ -2737,7 +3004,8 @@ Make sure to follow all the instructions while answering questions.
   }
 
   function isValidUrl(text) {
-    const urlPattern = /^(https?:\/\/)?(www\.)?([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/\S*)?$/i;
+    const urlPattern =
+      /^(https?:\/\/)?(www\.)?([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}(\/\S*)?$/i;
     return urlPattern.test(text);
   }
 
@@ -2819,7 +3087,10 @@ Make sure to follow all the instructions while answering questions.
       accountSnapshot.forEach((child) => {
         const email = child.key.replace(/\*/g, ".");
         const username = child.val().Username;
-        if (email.toLowerCase().includes(query) || (username && username.toLowerCase().includes(query))) {
+        if (
+          email.toLowerCase().includes(query) ||
+          (username && username.toLowerCase().includes(query))
+        ) {
           matches.push({
             email,
             username: username || email,
@@ -2832,7 +3103,10 @@ Make sure to follow all the instructions while answering questions.
 
       items.forEach((item, index) => {
         const username = usernames[index];
-        if (item.toLowerCase().includes(query) || username.toLowerCase().includes(query)) {
+        if (
+          item.toLowerCase().includes(query) ||
+          username.toLowerCase().includes(query)
+        ) {
           matches.push({
             email: item,
             username,
@@ -2891,12 +3165,16 @@ Make sure to follow all the instructions while answering questions.
   }
 
   messageInput.addEventListener("keydown", async function (e) {
-    if ((e.key === "ArrowUp" || e.key === "ArrowDown") && mentionSuggestions.style.display === "block") {
+    if (
+      (e.key === "ArrowUp" || e.key === "ArrowDown") &&
+      mentionSuggestions.style.display === "block"
+    ) {
       e.preventDefault();
       isNavigating = true;
 
       if (e.key === "ArrowUp") {
-        mentionIndex = (mentionIndex - 1 + currentMatches.length) % currentMatches.length;
+        mentionIndex =
+          (mentionIndex - 1 + currentMatches.length) % currentMatches.length;
       } else {
         mentionIndex = (mentionIndex + 1) % currentMatches.length;
       }
@@ -2935,7 +3213,10 @@ Make sure to follow all the instructions while answering questions.
 
       if (lastInsertedMention && lastInsertedMention.parentNode) {
         const space = document.createTextNode(" ");
-        lastInsertedMention.parentNode.insertBefore(space, lastInsertedMention.nextSibling);
+        lastInsertedMention.parentNode.insertBefore(
+          space,
+          lastInsertedMention.nextSibling,
+        );
 
         const selection = window.getSelection();
         const range = document.createRange();
@@ -3051,41 +3332,48 @@ Make sure to follow all the instructions while answering questions.
     return caretOffset;
   }
 
-  document.getElementById("message-input").addEventListener("keydown", function (e) {
-    if (e.key === "Backspace") {
-      const selection = window.getSelection();
-      if (!selection.rangeCount) return;
+  document
+    .getElementById("message-input")
+    .addEventListener("keydown", function (e) {
+      if (e.key === "Backspace") {
+        const selection = window.getSelection();
+        if (!selection.rangeCount) return;
 
-      const range = selection.getRangeAt(0);
-      const node = range.startContainer;
-      const offset = range.startOffset;
+        const range = selection.getRangeAt(0);
+        const node = range.startContainer;
+        const offset = range.startOffset;
 
-      if (offset === 0) {
-        let previous = node.previousSibling;
-        if (previous && previous.classList && previous.classList.contains("mention")) {
-          e.preventDefault();
-          previous.remove();
-        }
-      } else if (node.nodeType === Node.TEXT_NODE) {
-        const textUpToCaret = node.textContent.slice(0, offset);
-
-        if (textUpToCaret.endsWith(" ") && node.previousSibling) {
-          const previous = node.previousSibling;
-          if (previous.classList && previous.classList.contains("mention")) {
+        if (offset === 0) {
+          let previous = node.previousSibling;
+          if (
+            previous &&
+            previous.classList &&
+            previous.classList.contains("mention")
+          ) {
             e.preventDefault();
+            previous.remove();
+          }
+        } else if (node.nodeType === Node.TEXT_NODE) {
+          const textUpToCaret = node.textContent.slice(0, offset);
 
-            node.textContent = textUpToCaret.slice(0, -1) + node.textContent.slice(offset);
+          if (textUpToCaret.endsWith(" ") && node.previousSibling) {
+            const previous = node.previousSibling;
+            if (previous.classList && previous.classList.contains("mention")) {
+              e.preventDefault();
 
-            const newRange = document.createRange();
-            newRange.setStart(node, offset - 1);
-            newRange.setEnd(node, offset - 1);
-            selection.removeAllRanges();
-            selection.addRange(newRange);
+              node.textContent =
+                textUpToCaret.slice(0, -1) + node.textContent.slice(offset);
+
+              const newRange = document.createRange();
+              newRange.setStart(node, offset - 1);
+              newRange.setEnd(node, offset - 1);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            }
           }
         }
       }
-    }
-  });
+    });
 
   messageInput.addEventListener("blur", () => {
     applyFakeHighlight();
@@ -3198,7 +3486,9 @@ Make sure to follow all the instructions while answering questions.
   createColorGrid("highlight-color-grid", "hiliteColor");
 
   function hideAllColorGrids() {
-    document.querySelectorAll(".color-grid").forEach((g) => (g.style.display = "none"));
+    document
+      .querySelectorAll(".color-grid")
+      .forEach((g) => (g.style.display = "none"));
   }
   hideAllColorGrids();
 
@@ -3279,7 +3569,9 @@ Make sure to follow all the instructions while answering questions.
     }
   });
 
-  document.getElementById("message-input").addEventListener("input", adjustInputHeight);
+  document
+    .getElementById("message-input")
+    .addEventListener("input", adjustInputHeight);
 
   function adjustInputHeight() {
     const input = document.getElementById("message-input");
@@ -3296,11 +3588,19 @@ Make sure to follow all the instructions while answering questions.
     hideAllColorGrids();
   }
 
-  document.getElementById("message-input").addEventListener("mouseup", saveSelection);
-  document.getElementById("message-input").addEventListener("keyup", saveSelection);
+  document
+    .getElementById("message-input")
+    .addEventListener("mouseup", saveSelection);
+  document
+    .getElementById("message-input")
+    .addEventListener("keyup", saveSelection);
 
-  document.getElementById("message-input").addEventListener("keyup", updateToolbar);
-  document.getElementById("message-input").addEventListener("mouseup", updateToolbar);
+  document
+    .getElementById("message-input")
+    .addEventListener("keyup", updateToolbar);
+  document
+    .getElementById("message-input")
+    .addEventListener("mouseup", updateToolbar);
 
   function updateToolbar() {
     const isBold = document.queryCommandState("bold");
@@ -3434,15 +3734,22 @@ Make sure to follow all the instructions while answering questions.
   });
 
   document.addEventListener("click", function (e) {
-    if (e.target !== linkDialog && !linkDialog.contains(e.target) && e.target !== linkBtn) {
+    if (
+      e.target !== linkDialog &&
+      !linkDialog.contains(e.target) &&
+      e.target !== linkBtn
+    ) {
       linkDialog.style.display = "none";
     }
   });
 
-  document.getElementById("message-input").addEventListener("input", function () {});
+  document
+    .getElementById("message-input")
+    .addEventListener("input", function () {});
 
   function autoDetectLinks(text) {
-    const urlRegex = /(https?:\/\/[^\s]+)|((www\.)?([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}\b(\/[^\s]*)?)/gi;
+    const urlRegex =
+      /(https?:\/\/[^\s]+)|((www\.)?([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}\b(\/[^\s]*)?)/gi;
     return text.replace(urlRegex, function (url) {
       let href = url;
       if (url.startsWith("www.")) {
@@ -3479,7 +3786,11 @@ Make sure to follow all the instructions while answering questions.
 
     const fileNameDisplay = document.createElement("div");
     fileNameDisplay.className = "attachment-filename";
-    fileNameDisplay.textContent = fileName ? (fileName.length > 12 ? fileName.substring(0, 10) + "..." : fileName) : "";
+    fileNameDisplay.textContent = fileName
+      ? fileName.length > 12
+        ? fileName.substring(0, 10) + "..."
+        : fileName
+      : "";
 
     const mimeType = fileBlobOrUrl.split(",")[0].split(":")[1].split(";")[0];
 
@@ -3499,7 +3810,11 @@ Make sure to follow all the instructions while answering questions.
       item.appendChild(imgContainer);
 
       item.onclick = (e) => {
-        if (e.target.classList.contains("remove-attachment") || e.target === removeBtn) return;
+        if (
+          e.target.classList.contains("remove-attachment") ||
+          e.target === removeBtn
+        )
+          return;
         window.openFileViewer(fileBlobOrUrl, fileName, mimeType);
       };
     } else {
@@ -3515,7 +3830,11 @@ Make sure to follow all the instructions while answering questions.
       item.appendChild(fileIcon);
 
       item.onclick = (e) => {
-        if (e.target.classList.contains("remove-attachment") || e.target === removeBtn) return;
+        if (
+          e.target.classList.contains("remove-attachment") ||
+          e.target === removeBtn
+        )
+          return;
         window.openFileViewer(fileBlobOrUrl, fileName, mimeType);
       };
     }
@@ -3597,7 +3916,8 @@ Make sure to follow all the instructions while answering questions.
       for (const [chatName, chatDetails] of Object.entries(chatInfo)) {
         const isAccessible =
           chatDetails.Type === "Public" ||
-          (chatDetails.Type === "Private" && chatDetails.Members.split(",").includes(email.replace(/\./g, "*")));
+          (chatDetails.Type === "Private" &&
+            chatDetails.Members.split(",").includes(email.replace(/\./g, "*")));
 
         if (isAccessible) {
           const chatRef = ref(database, `Chats/${chatName}`);
@@ -3608,7 +3928,10 @@ Make sure to follow all the instructions while answering questions.
             const messageIds = Object.keys(messages).sort();
             const latestMessageId = messageIds[messageIds.length - 1];
 
-            const readMessageRef = ref(database, `Accounts/${email.replace(/\./g, "*")}/readMessages/${chatName}`);
+            const readMessageRef = ref(
+              database,
+              `Accounts/${email.replace(/\./g, "*")}/readMessages/${chatName}`,
+            );
             await set(readMessageRef, latestMessageId);
 
             readMessages[chatName] = latestMessageId;
@@ -3668,7 +3991,9 @@ Make sure to follow all the instructions while answering questions.
 
   gui.querySelector("#bookmarklet-close").onclick = function () {
     const currentUrl = window.location.href;
-    let link = document.querySelector('link[rel="icon"], link[rel="shortcut icon"]');
+    let link = document.querySelector(
+      'link[rel="icon"], link[rel="shortcut icon"]',
+    );
     if (!link) {
       link = document.createElement("link");
       link.rel = "icon";
@@ -3685,25 +4010,30 @@ Make sure to follow all the instructions while answering questions.
     gui.remove();
   };
 
-  document.getElementById("customize-profile").addEventListener("click", async function () {
-    const customizeScreen = document.getElementById("customize-account-screen");
-    const chatScreen = document.getElementById("chat-screen");
+  document
+    .getElementById("customize-profile")
+    .addEventListener("click", async function () {
+      const customizeScreen = document.getElementById(
+        "customize-account-screen",
+      );
+      const chatScreen = document.getElementById("chat-screen");
 
-    document.getElementById("create-username").value = "";
-    document.getElementById("create-bio").value = "";
+      document.getElementById("create-username").value = "";
+      document.getElementById("create-bio").value = "";
 
-    const accountRef = ref(database, `Accounts/${email.replace(/\./g, "*")}`);
-    const snapshot = await get(accountRef);
-    const userData = snapshot.val();
+      const accountRef = ref(database, `Accounts/${email.replace(/\./g, "*")}`);
+      const snapshot = await get(accountRef);
+      const userData = snapshot.val();
 
-    if (userData) {
-      document.getElementById("create-username").value = userData.Username || "";
-      document.getElementById("create-bio").value = userData.Bio || "";
-    }
+      if (userData) {
+        document.getElementById("create-username").value =
+          userData.Username || "";
+        document.getElementById("create-bio").value = userData.Bio || "";
+      }
 
-    chatScreen.classList.add("hidden");
-    customizeScreen.classList.remove("hidden");
-  });
+      chatScreen.classList.add("hidden");
+      customizeScreen.classList.remove("hidden");
+    });
 
   document.getElementById("submit-customize").onclick = async function () {
     const username = document.getElementById("create-username").value.trim();
@@ -3712,7 +4042,10 @@ Make sure to follow all the instructions while answering questions.
     const customizeScreen = document.getElementById("customize-account-screen");
 
     try {
-      const accountsRef = ref(database, `Accounts/${email.replace(/\./g, "*")}`);
+      const accountsRef = ref(
+        database,
+        `Accounts/${email.replace(/\./g, "*")}`,
+      );
       const snapshot = await get(accountsRef);
       const existingData = snapshot.val() || {};
 
@@ -3758,7 +4091,10 @@ Make sure to follow all the instructions while answering questions.
     originalMembers = "";
   }
 
-  async function handleChannelForm(isModifying = false, existingChannelName = null) {
+  async function handleChannelForm(
+    isModifying = false,
+    existingChannelName = null,
+  ) {
     chatScreen.style.display = "none";
     document.getElementById("channel-screen").classList.remove("hidden");
     const channelType = document.getElementById("channel-type");
@@ -3817,19 +4153,25 @@ Make sure to follow all the instructions while answering questions.
     }
 
     let availableMembers = [];
-    document.getElementById("channel-type").addEventListener("change", function () {
-      if (this.value === "Public") {
-        membersContainer.style.display = "none";
-      } else {
-        membersContainer.style.display = "block";
-        loadMemberOptions();
+    document
+      .getElementById("channel-type")
+      .addEventListener("change", function () {
+        if (this.value === "Public") {
+          membersContainer.style.display = "none";
+        } else {
+          membersContainer.style.display = "block";
+          loadMemberOptions();
 
-        if (previousChannelType === "Public" && originalMembers && originalMembers !== "None") {
-          loadExistingMembers(originalMembers);
+          if (
+            previousChannelType === "Public" &&
+            originalMembers &&
+            originalMembers !== "None"
+          ) {
+            loadExistingMembers(originalMembers);
+          }
         }
-      }
-      previousChannelType = this.value;
-    });
+        previousChannelType = this.value;
+      });
 
     function loadMemberOptions() {
       async function updateAvailableMembers() {
@@ -3844,7 +4186,11 @@ Make sure to follow all the instructions while answering questions.
         );
 
         availableMembers = Object.keys(accounts)
-          .filter((accountEmail) => accountEmail !== email.replace(/\./g, "*") && !selectedEmails.has(accountEmail))
+          .filter(
+            (accountEmail) =>
+              accountEmail !== email.replace(/\./g, "*") &&
+              !selectedEmails.has(accountEmail),
+          )
           .map((accountEmail) => ({
             id: accountEmail,
             email: accountEmail.replace(/\*/g, "."),
@@ -3881,7 +4227,9 @@ Make sure to follow all the instructions while answering questions.
 
         selectedMembers.appendChild(memberElement);
 
-        availableMembers = availableMembers.filter((availableMember) => availableMember.id !== member.id);
+        availableMembers = availableMembers.filter(
+          (availableMember) => availableMember.id !== member.id,
+        );
         renderMembersList(availableMembers);
 
         membersList.style.display = "none";
@@ -3902,7 +4250,9 @@ Make sure to follow all the instructions while answering questions.
 
       memberSearch.oninput = (e) => {
         const searchTerm = e.target.value.toLowerCase();
-        const filteredMembers = availableMembers.filter((member) => member.email.toLowerCase().includes(searchTerm));
+        const filteredMembers = availableMembers.filter((member) =>
+          member.email.toLowerCase().includes(searchTerm),
+        );
         renderMembersList(filteredMembers);
         membersList.style.display = "block";
       };
@@ -3914,7 +4264,9 @@ Make sure to follow all the instructions while answering questions.
       const members = membersList.split(",");
       const currentUserEmail = email.replace(/\./g, "*");
 
-      const otherMembers = members.filter((member) => member !== currentUserEmail);
+      const otherMembers = members.filter(
+        (member) => member !== currentUserEmail,
+      );
 
       selectedMembers.innerHTML = "";
 
@@ -3935,7 +4287,9 @@ Make sure to follow all the instructions while answering questions.
             email: formattedEmail,
           });
           availableMembers.sort((a, b) => a.email.localeCompare(b.email));
-          if (document.getElementById("members-list").style.display !== "none") {
+          if (
+            document.getElementById("members-list").style.display !== "none"
+          ) {
             renderMembersList(availableMembers);
           }
         };
@@ -3961,7 +4315,8 @@ Make sure to follow all the instructions while answering questions.
     });
   }
   async function createChannelHandler() {
-    const { isModifying, existingChannelName, originalMembers } = pendingFormOptions;
+    const { isModifying, existingChannelName, originalMembers } =
+      pendingFormOptions;
     const channelType = document.getElementById("channel-type");
     const channelMembers = document.getElementById("channel-members");
     const channelName = document.getElementById("channel-name");
@@ -3986,7 +4341,9 @@ Make sure to follow all the instructions while answering questions.
       const chatInfoRef = ref(database, `Chat Info/${name}`);
       const snapshot = await get(chatInfoRef);
       if (snapshot.exists()) {
-        alert("A channel with this name already exists. Please choose a different name.");
+        alert(
+          "A channel with this name already exists. Please choose a different name.",
+        );
         return;
       }
     }
@@ -3995,14 +4352,20 @@ Make sure to follow all the instructions while answering questions.
     members.push(email.replace(/\./g, "*"));
 
     if (type === "Private") {
-      const selectedMemberElements = document.querySelectorAll(".selected-member");
+      const selectedMemberElements =
+        document.querySelectorAll(".selected-member");
       if (selectedMemberElements.length === 0) {
         alert("Please select at least one member for private channel");
         return;
       }
       members = members.concat(
         Array.from(selectedMemberElements).map((el) =>
-          el.textContent.trim().replace(/×$/, "").replace(/\./g, "*").trim().replace(/\s+/g, ""),
+          el.textContent
+            .trim()
+            .replace(/×$/, "")
+            .replace(/\./g, "*")
+            .trim()
+            .replace(/\s+/g, ""),
         ),
       );
     }
@@ -4041,7 +4404,8 @@ Make sure to follow all the instructions while answering questions.
   }
 
   function deleteChannelHandler() {
-    const { isModifying, existingChannelName, originalMembers } = pendingFormOptions;
+    const { isModifying, existingChannelName, originalMembers } =
+      pendingFormOptions;
     const channelType = document.getElementById("channel-type");
     const channelMembers = document.getElementById("channel-members");
     const channelName = document.getElementById("channel-name");
@@ -4060,7 +4424,11 @@ Make sure to follow all the instructions while answering questions.
         return;
       }
 
-      if (confirm(`Are you sure you want to delete channel "${channelNameToDelete}"?`)) {
+      if (
+        confirm(
+          `Are you sure you want to delete channel "${channelNameToDelete}"?`,
+        )
+      ) {
         try {
           const channelRef = ref(database, `Chat Info/${channelNameToDelete}`);
           remove(channelRef)
@@ -4089,9 +4457,11 @@ Make sure to follow all the instructions while answering questions.
       }
     }
   }
-  document.getElementById("create-new-server").addEventListener("click", function () {
-    handleChannelForm(false);
-  });
+  document
+    .getElementById("create-new-server")
+    .addEventListener("click", function () {
+      handleChannelForm(false);
+    });
 
   async function updateModifyButtonVisibility() {
     const modifyButton = document.getElementById("modify-channel");
@@ -4123,14 +4493,16 @@ Make sure to follow all the instructions while answering questions.
     }
   }
 
-  document.getElementById("modify-channel").addEventListener("click", function () {
-    if (!currentChat) {
-      alert("Please select a channel to modify");
-      return;
-    }
+  document
+    .getElementById("modify-channel")
+    .addEventListener("click", function () {
+      if (!currentChat) {
+        alert("Please select a channel to modify");
+        return;
+      }
 
-    handleChannelForm(true, currentChat);
-  });
+      handleChannelForm(true, currentChat);
+    });
 
   function setupUnreadCountUpdates() {
     const chatsRef = ref(database, "Chats");
