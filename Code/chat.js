@@ -2643,8 +2643,7 @@ Make sure to follow all the instructions while answering questions.
             }, 5000);
           }
         }
-      }
-      if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
+      } else if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
         async function jurorsay(juror, message) {
           if (juror == "J1") {
             const tam = push(messagesRef);
