@@ -1784,7 +1784,7 @@ Make sure to follow all the instructions while answering questions.
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
-          Message: "tiggy",
+          Message: message,
           Date: Date.now(),
         });
 
@@ -2547,10 +2547,11 @@ Make sure to follow all the instructions while answering questions.
         const newMessageRef = push(messagesRef);
         await update(newMessageRef, {
           User: email,
-          Message: "husky",
+          Message: message,
           Date: Date.now(),
         });
       }
+    }
 
       const snapshot = await get(messagesRef);
       const messages = snapshot.val() || {};
