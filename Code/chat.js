@@ -1743,8 +1743,13 @@ function sleep(ms) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
     if (message) {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: d,
+        });
       if (pureMessage.trim().toLowerCase().startsWith("/ai ")) {
-        let d = Date.now();
         const question = message.substring(4).trim();
 
         const messagesSnapshot = await get(messagesRef);
@@ -1752,13 +1757,6 @@ function sleep(ms) {
         const messageEntries = Object.entries(messages)
           .sort((a, b) => new Date(a[1].Date) - new Date(b[1].Date))
           .slice(-20);
-
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: d,
-        });
 
         const API_KEYS = [
           "AIzaSyDJEIVUqeVkrbtMPnBvB8QWd9VuUQQQBjg",
@@ -1876,13 +1874,6 @@ Make sure to follow all the instructions while answering questions.
           }
         }
 
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
-
         const random = Math.random() * 100;
         let result;
 
@@ -1921,13 +1912,6 @@ Make sure to follow all the instructions while answering questions.
           }
         }
 
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
-
         const random = Math.random() * 100;
         const result = random < headsChance ? "Heads" : "Tails";
         const chances = `(${headsChance.toFixed(1)}% Heads, ${tailsChance.toFixed(1)}% Tails)`;
@@ -1940,13 +1924,6 @@ Make sure to follow all the instructions while answering questions.
         });
       } else if (pureMessage.trim().toLowerCase().startsWith("/roll ")) {
         const sides = parseInt(message.split(" ")[1]);
-
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
 
         if (isNaN(sides) || sides < 1) {
           const errorMessageRef = push(messagesRef);
@@ -2037,12 +2014,6 @@ Make sure to follow all the instructions while answering questions.
             ? email.replace(/\./g, "*")
             : "anonymous";
         if (pureMessage.trim().toLowerCase() === "/snake leaderboard") {
-          const userMessageRef = push(messagesRef);
-          await update(userMessageRef, {
-            User: email,
-            Message: message,
-            Date: Date.now(),
-          });
 
           try {
             const scoresRef = ref(database, "SnakeScores");
@@ -2126,12 +2097,6 @@ Make sure to follow all the instructions while answering questions.
           }
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/tiggy")) {
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
         const tiggydialoguehappy = [
           "*whine!*",
           "*whine, tiggy!*",
@@ -2805,14 +2770,6 @@ Make sure to follow all the instructions while answering questions.
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
       } 
-      else {
-        const newMessageRef = push(messagesRef);
-        await update(newMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
-      }
 
     const snapshot = await get(messagesRef);
     const messages = snapshot.val() || {};
