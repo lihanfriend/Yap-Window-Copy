@@ -2414,7 +2414,7 @@ Make sure to follow all the instructions while answering questions.
                          }
                     }
                } 
-               if (pureMessage.trim().toLowerCase() === "/tiggy help") {
+               if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
                     async function jurorsay(juror, message) {
                          await update(tiggydialogue, {
                               User: BOT_USERS.juror,
