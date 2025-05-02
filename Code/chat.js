@@ -2812,7 +2812,6 @@ Make sure to follow all the instructions while answering questions.
           Date: Date.now(),
         });
       }
-    }
 
     const snapshot = await get(messagesRef);
     const messages = snapshot.val() || {};
@@ -2826,7 +2825,7 @@ Make sure to follow all the instructions while answering questions.
   document.getElementById("bookmarklet-gui").scrollTop = 0;
   isSending = false;
   sendButton.disabled = false;
-
+  }
   function formatDate(timestamp) {
     const messageDate = new Date(timestamp);
     const today = new Date();
