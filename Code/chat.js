@@ -2416,7 +2416,8 @@ Make sure to follow all the instructions while answering questions.
                } 
                if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
                     async function jurorsay(juror, message) {
-                         await update(tiggydialogue, {
+                         const tam = push(messagesRef);
+                         await update(tam, {
                               User: BOT_USERS.juror,
                               Message: message,
                               Date: Date.now(),
