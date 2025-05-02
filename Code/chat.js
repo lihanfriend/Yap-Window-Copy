@@ -2547,7 +2547,7 @@ Make sure to follow all the instructions while answering questions.
         const newMessageRef = push(messagesRef);
         await update(newMessageRef, {
           User: email,
-          Message: message,
+          Message: "husky",
           Date: Date.now(),
         });
       }
