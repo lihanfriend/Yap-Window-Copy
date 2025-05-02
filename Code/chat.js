@@ -1784,7 +1784,7 @@ Make sure to follow all the instructions while answering questions.
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
-          Message: message,
+          Message: "tiggy",
           Date: Date.now(),
         });
 
@@ -1803,17 +1803,19 @@ Make sure to follow all the instructions while answering questions.
           if (rollnumber > 3990) {
             result = 7;
           } else {
-            result = Math.ceil(rollnumber / 665);
+            result = Math.floor(rollnumber / 665) + 1;
           }
         } else {
           result = Math.floor(Math.random() * sides) + 1;
         }
+          
         const botMessageRef = push(messagesRef);
         await update(botMessageRef, {
           User: BOT_USERS.RNG,
           Message: `🎲 Rolling a ${sides}-sided die: ${result}`,
           Date: Date.now(),
         });
+          
         if (result == 7) {
           await sleep(1000);
           const archfiend1 = push(messagesRef);
