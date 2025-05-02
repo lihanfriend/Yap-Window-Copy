@@ -16,6 +16,19 @@ function sleep(ms) {
           ARCHFIEND: "[Archfiend Dice]",
           TIGGY: "[Tiggy]",
           TIGGYBOT: "[Tiggy Bot]",
+          TAM: "[Twelve Angry Men]",
+          J1: "[Foreman]",
+          J2: "[Juror 2]",
+          J3: "[Juror 3]",
+          J4: "[Juror 4]",
+          J5: "[Juror 5]",
+          J6: "[Juror 6]",
+          J7: "[Juror 7]",
+          J8: "[Juror 8]",
+          J9: "[Juror 9]",
+          J10: "[Juror 10]",
+          J11: "[Juror 11]",
+          J12: "[Juror 12]"
      };
      const users = {};
      const email = auth.currentUser.email;
@@ -2400,6 +2413,72 @@ Make sure to follow all the instructions while answering questions.
                               }, 5000);
                          }
                     }
+               } 
+               if (pureMessage.trim().toLowerCase() === "/tiggy help") {
+                    function jurorsay(juror, message) {
+                         await update(tiggydialogue, {
+                              User: BOT_USERS.juror,
+                              Message: message,
+                              Date: Date.now(),
+                         });
+                    }
+                    jurorsay(J1, "Ok, settle down, everyone. A vote has been called for.");
+                    await sleep(1000);
+                    jurorsay(J1, "We'll vote by juror name. Juror 1?");
+                    await sleep(500);
+                    jurorsay(J1, "Oh, that's me. *chuckles*");
+                    await sleep(500);
+                    jurorsay(J1, "Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 2?");
+                    await sleep(1500);
+                    jurorsay(J2, "Not guilty, sir.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 3?");
+                    await sleep(1500);
+                    jurorsay(J3, "*face contorted* Not... guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 4?");
+                    await sleep(1500);
+                    jurorsay(J4, "Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 2?");
+                    await sleep(1500);
+                    jurorsay(J2, "Not guilty, sir.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 5?");
+                    await sleep(1500);
+                    jurorsay(J5, "Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 6?");
+                    await sleep(1500);
+                    jurorsay(J6, "*looking down* Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 7?");
+                    await sleep(1500);
+                    jurorsay(J7, "*leans back on chair* Not guilty, get this business finished with!");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 8?");
+                    await sleep(1500);
+                    jurorsay(J8, "*smiles* Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 9?");
+                    await sleep(1500);
+                    jurorsay(J9, "Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 10?");
+                    await sleep(1500);
+                    jurorsay(J10, "Not guilty!");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 11?");
+                    await sleep(1500);
+                    jurorsay(J11, "...not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Juror 12?");
+                    await sleep(1500);
+                    jurorsay(J12, "Not guilty.");
+                    await sleep(1500);
+                    jurorsay(J1, "Well, we have a verdict, then.")
                } else {
                     const newMessageRef = push(messagesRef);
                     await update(newMessageRef, {
