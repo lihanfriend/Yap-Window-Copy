@@ -29,7 +29,7 @@ function sleep(ms) {
     J10: "[Juror 10]",
     J11: "[Juror 11]",
     J12: "[Juror 12]",
-    LOVE: "[Love Bot]"
+    LOVE: "[Love Bot]",
   };
   const users = {};
   const email = auth.currentUser.email;
@@ -2181,7 +2181,7 @@ Make sure to follow all the instructions while answering questions.
           const tiggyhelp3 = push(messagesRef);
           await update(tiggyhelp3, {
             User: BOT_USERS.TIGGYBOT,
-            Message: `/tiggy, /tiggy pet, /tiggy jiggle, /tiggy decapitate, /tiggy jiggle, /tiggy whitepowder`,
+            Message: `/tiggy, /tiggy pet, /tiggy jiggle, /tiggy decapitate, /tiggy poke, /tiggy whitepowder`,
             Date: Date.now(),
           });
         } else if (pureMessage.trim().toLowerCase() === "/tiggy pet") {
@@ -2382,22 +2382,25 @@ Make sure to follow all the instructions while answering questions.
             const createJiggleEffect = (element, onJiggleEnd) => {
               let direction = 1; // 1 for right, -1 for left
               let position = 0;
+              let isJiggling = true;
 
               const jiggleInterval = setInterval(() => {
-                position += 50 * direction; // Move 50px at a time for a huge jiggle
+                if (!isJiggling) return;
+
+                position += 50 * direction; // Move 50px at a time
                 element.style.transform = `translate(-50%, -50%) translateX(${position}px)`;
 
                 if (position >= 400 || position <= -400) {
-                  // Jiggle bounds set to 400px
                   direction *= -1; // Reverse direction at bounds
                 }
-              }, 10); // Extremely fast speed for a dramatic jiggle
+              }, 20); // Fast jiggle update
 
               setTimeout(() => {
-                clearInterval(jiggleInterval);
+                isJiggling = false; // Stop jiggle
+                clearInterval(jiggleInterval); // Clear the interval
                 element.style.transform = "translate(-50%, -50%)"; // Reset position
-                onJiggleEnd(); // Call the function to create the smaller Tiggy after jiggle ends
-              }, 4000); // Stop jiggle after 4 seconds
+                onJiggleEnd(); // Callback for after jiggle ends
+              }, 4000); // Jiggle for 4 seconds
             };
 
             const createImageClone = (src, leftPosition, onJiggleEnd) => {
@@ -2424,7 +2427,7 @@ Make sure to follow all the instructions while answering questions.
               setTimeout(() => {
                 image.style.transform = "translate(-50%, -50%) scale(0)";
                 image.style.opacity = "0";
-              }, 5000);
+              }, 5500);
 
               setTimeout(() => {
                 image.remove();
@@ -2464,10 +2467,10 @@ Make sure to follow all the instructions while answering questions.
             };
 
             const onJiggleEnd = () => {
-              // After both Tiggies finish jiggling, create a new smaller Tiggy
-              createSmallTiggy("50%", "50%"); // You can adjust this as needed
+              createSmallTiggy("50%", "50%");
             };
 
+            // Create two Tiggies with the jiggle effect
             const image1 = createImageClone(
               "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
               "45%",
@@ -2490,23 +2493,23 @@ Make sure to follow all the instructions while answering questions.
             const createJiggleEffect = (element) => {
               let direction = 1; // 1 for right, -1 for left
               let position = 0;
-  
+
               const jiggleInterval = setInterval(() => {
                 position += 50 * direction; // Move 50px at a time for a huge jiggle
                 element.style.transform = `translate(-50%, -50%) translateX(${position}px)`;
-  
+
                 if (position >= 200 || position <= -200) {
                   // Jiggle bounds set to 200px
                   direction *= -1; // Reverse direction at bounds
                 }
               }, 10); // Extremely fast speed for a dramatic jiggle
-  
+
               setTimeout(() => {
                 clearInterval(jiggleInterval);
                 element.style.transform = "translate(-50%, -50%)"; // Reset position
               }, 4000); // Stop jiggle after 4 seconds
             };
-  
+
             const image = document.createElement("img");
             image.src =
               "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
@@ -2522,17 +2525,17 @@ Make sure to follow all the instructions while answering questions.
             image.style.opacity = "1";
             image.style.zIndex = "2147483647";
             document.body.appendChild(image);
-  
+
             setTimeout(() => {
               image.style.transform = "translate(-50%, -50%) scale(1)";
               createJiggleEffect(image);
             }, 500);
-  
+
             setTimeout(() => {
               image.style.transform = "translate(-50%, -50%) scale(0)";
               image.style.opacity = "0";
             }, 5000);
-  
+
             setTimeout(() => {
               image.remove();
             }, 6000);
@@ -3201,7 +3204,7 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J12", "Not guilty.");
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
-      } 
+      }
       if (pureMessage.trim().toLowerCase() === "/love") {
         async function lovebotsay(e) {
           const userMessageRef = push(messagesRef);
@@ -3211,18 +3214,30 @@ Make sure to follow all the instructions while answering questions.
             Date: Date.now(),
           });
         }
-        mode = pureMessage.trim().toLowerCase().split(' ')[1]
-        person1 = pureMessage.trim().toLowerCase().split(' ')[2]
-        person2 = pureMessage.trim().toLowerCase().split(' ')[3]
-        ship = mode = pureMessage.trim().toLowerCase().split(' ')[4]
-        if (mode == "pull") lovebotsay(`${email} wants ${person1} to be their name also redacted!`)
-        if (mode == "push") lovebotsay(`${email} wants ${person2} to be ${person1}'s name redacted!`)
-        if (mode == "ship") lovebotsay(`${email} ships ${person1} with ${person2}: ${ship}!`)
-        if (mode == "commutative") lovebotsay(`${email} hopes that ${person1} and ${person2} will form a commutative relationship!`)
-        if (mode == "breakup") lovebotsay(`${email} hopes that ${person1} and ${person2} will break up!`)
-        if (mode == "yiyang") lovebotsay(`Fat Cat.`)
-      }
-      else {
+        mode = pureMessage.trim().toLowerCase().split(" ")[1];
+        person1 = pureMessage.trim().toLowerCase().split(" ")[2];
+        person2 = pureMessage.trim().toLowerCase().split(" ")[3];
+        ship = mode = pureMessage.trim().toLowerCase().split(" ")[4];
+        if (mode == "pull")
+          lovebotsay(
+            `${email} wants ${person1} to be their name also redacted!`,
+          );
+        if (mode == "push")
+          lovebotsay(
+            `${email} wants ${person2} to be ${person1}'s name redacted!`,
+          );
+        if (mode == "ship")
+          lovebotsay(`${email} ships ${person1} with ${person2}: ${ship}!`);
+        if (mode == "commutative")
+          lovebotsay(
+            `${email} hopes that ${person1} and ${person2} will form a commutative relationship!`,
+          );
+        if (mode == "breakup")
+          lovebotsay(
+            `${email} hopes that ${person1} and ${person2} will break up!`,
+          );
+        if (mode == "yiyang") lovebotsay(`Fat Cat.`);
+      } else {
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
