@@ -2377,10 +2377,6 @@ Make sure to follow all the instructions while answering questions.
           tiggysay("angry");
           await sleep(1000);
           tiggysay("[scuttles away]");
-          await sleep(1000);
-          window.open(
-            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
-          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy jiggle") {
           if (random(10) > 7) {
             const createJiggleEffect = (element, onJiggleEnd) => {
@@ -3206,7 +3202,7 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J1", "Well, we have a verdict, then.");
       } 
       if (pureMessage.trim().toLowerCase() === "/love") {
-        function lovebotsay(e) {
+        async function lovebotsay(e) {
           const userMessageRef = push(messagesRef);
           await update(userMessageRef, {
             User: BOT_USERS.LOVE,
