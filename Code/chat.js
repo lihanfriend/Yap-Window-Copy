@@ -1743,12 +1743,6 @@ function sleep(ms) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
     if (message) {
-      const userMessageRef = push(messagesRef);
-      await update(userMessageRef, {
-        User: email,
-        Message: message,
-        Date: Date.now(),
-      });
       if (pureMessage.trim().toLowerCase().startsWith("/ai ")) {
         const question = message.substring(4).trim();
 
@@ -1922,14 +1916,20 @@ Make sure to follow all the instructions while answering questions.
           Message: `🎲 Coin flip result: ${result}`,
           Date: Date.now(),
         });
-      } else if (pureMessage.trim().toLowerCase().startsWith("/roll ")) {
+      } else if (pureMessage.trim().toLowerCase().startsWith("/dice ")) {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: Date.now(),
+        });
         const sides = parseInt(message.split(" ")[1]);
 
         if (isNaN(sides) || sides < 1) {
           const errorMessageRef = push(messagesRef);
           await update(errorMessageRef, {
             User: BOT_USERS.RNG,
-            Message: "Please specify a valid number of sides (e.g., /roll 6)",
+            Message: "Please specify a valid number of sides (e.g., /dice 6)",
             Date: Date.now(),
           });
           return;
@@ -2096,6 +2096,12 @@ Make sure to follow all the instructions while answering questions.
           }
         }
       } else if (pureMessage.trim().toLowerCase().startsWith("/tiggy")) {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: Date.now(),
+        });
         const tiggydialoguehappy = [
           "*whine!*",
           "*whine, tiggy!*",
@@ -2169,6 +2175,12 @@ Make sure to follow all the instructions while answering questions.
           await update(tiggyhelp, {
             User: BOT_USERS.TIGGYBOT,
             Message: `Tiggy is fed every day at 8am, 1pm, and 6pm. Don't mess with Tiggy when it is hungry!`,
+            Date: Date.now(),
+          });
+          push(messagesRef);
+          await update(tiggyhelp, {
+            User: BOT_USERS.TIGGYBOT,
+            Message: `/tiggy, /tiggy pet, /tiggy jiggle, /tiggy decapitate, /tiggy jiggle, /tiggy whitepowder`,
             Date: Date.now(),
           });
         } else if (pureMessage.trim().toLowerCase() === "/tiggy pet") {
@@ -2369,11 +2381,164 @@ Make sure to follow all the instructions while answering questions.
             "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
           );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy jiggle") {
+          if (random(10) == 10) {
+            const createJiggleEffect = (element, onJiggleEnd) => {
+              let direction = 1; // 1 for right, -1 for left
+              let position = 0;
+
+              const jiggleInterval = setInterval(() => {
+                position += 50 * direction; // Move 50px at a time for a huge jiggle
+                element.style.transform = `translate(-50%, -50%) translateX(${position}px)`;
+
+                if (position >= 400 || position <= -400) {
+                  // Jiggle bounds set to 400px
+                  direction *= -1; // Reverse direction at bounds
+                }
+              }, 10); // Extremely fast speed for a dramatic jiggle
+
+              setTimeout(() => {
+                clearInterval(jiggleInterval);
+                element.style.transform = "translate(-50%, -50%)"; // Reset position
+                onJiggleEnd(); // Call the function to create the smaller Tiggy after jiggle ends
+              }, 4000); // Stop jiggle after 4 seconds
+            };
+
+            const createImageClone = (src, leftPosition, onJiggleEnd) => {
+              const image = document.createElement("img");
+              image.src = src;
+              image.style.position = "fixed";
+              image.style.top = "50%";
+              image.style.left = leftPosition;
+              image.style.transform = "translate(-50%, -50%) scale(0)";
+              image.style.width = "200px";
+              image.style.height = "200px";
+              image.style.border = "5px solid blue";
+              image.style.borderRadius = "8px";
+              image.style.transition = "transform 1.5s ease, opacity 1.5s ease";
+              image.style.opacity = "1";
+              image.style.zIndex = "2147483647";
+              document.body.appendChild(image);
+
+              setTimeout(() => {
+                image.style.transform = "translate(-50%, -50%) scale(1)";
+                createJiggleEffect(image, onJiggleEnd);
+              }, 500);
+
+              setTimeout(() => {
+                image.style.transform = "translate(-50%, -50%) scale(0)";
+                image.style.opacity = "0";
+              }, 5000);
+
+              setTimeout(() => {
+                image.remove();
+              }, 6000);
+
+              return image;
+            };
+
+            const createSmallTiggy = (leftPosition, topPosition) => {
+              const smallImage = document.createElement("img");
+              smallImage.src =
+                "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+              smallImage.style.position = "fixed";
+              smallImage.style.top = topPosition; // Same position as the original Tiggy
+              smallImage.style.left = leftPosition; // Same position as the original Tiggy
+              smallImage.style.transform = "translate(-50%, -50%) scale(0)";
+              smallImage.style.width = "100px"; // Smaller size
+              smallImage.style.height = "100px"; // Smaller size
+              smallImage.style.transition =
+                "transform 1s ease, opacity 1s ease";
+              smallImage.style.opacity = "1";
+              smallImage.style.zIndex = "2147483647";
+              document.body.appendChild(smallImage);
+
+              setTimeout(() => {
+                smallImage.style.transform = "translate(-50%, -50%) scale(1)";
+              }, 500);
+
+              setTimeout(() => {
+                smallImage.style.transform = "translate(-50%, -50%) scale(0)";
+                smallImage.style.opacity = "0";
+              }, 5000);
+
+              setTimeout(() => {
+                smallImage.remove();
+              }, 6000);
+            };
+
+            const onJiggleEnd = () => {
+              // After both Tiggies finish jiggling, create a new smaller Tiggy
+              createSmallTiggy("50%", "50%"); // You can adjust this as needed
+            };
+
+            const image1 = createImageClone(
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+              "45%",
+              onJiggleEnd,
+            );
+            const image2 = createImageClone(
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+              "55%",
+              onJiggleEnd,
+            );
+
+            tiggysay("*jiggle*");
+            await sleep(500);
+            tiggysay("*wiggle*");
+            await sleep(500);
+            tiggysay("*sus noise*");
+          }
           tiggysay("*jiggle*");
           await sleep(1000);
-          window.open(
-            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
-          );
+          const createJiggleEffect = (element) => {
+            let direction = 1; // 1 for right, -1 for left
+            let position = 0;
+
+            const jiggleInterval = setInterval(() => {
+              position += 50 * direction; // Move 50px at a time for a huge jiggle
+              element.style.transform = `translate(-50%, -50%) translateX(${position}px)`;
+
+              if (position >= 200 || position <= -200) {
+                // Jiggle bounds set to 200px
+                direction *= -1; // Reverse direction at bounds
+              }
+            }, 10); // Extremely fast speed for a dramatic jiggle
+
+            setTimeout(() => {
+              clearInterval(jiggleInterval);
+              element.style.transform = "translate(-50%, -50%)"; // Reset position
+            }, 4000); // Stop jiggle after 4 seconds
+          };
+
+          const image = document.createElement("img");
+          image.src =
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+          image.style.position = "fixed";
+          image.style.top = "50%";
+          image.style.left = "50%";
+          image.style.transform = "translate(-50%, -50%) scale(0)";
+          image.style.width = "200px";
+          image.style.height = "200px";
+          image.style.border = "5px solid blue";
+          image.style.borderRadius = "8px";
+          image.style.transition = "transform 1.5s ease, opacity 1.5s ease";
+          image.style.opacity = "1";
+          image.style.zIndex = "2147483647";
+          document.body.appendChild(image);
+
+          setTimeout(() => {
+            image.style.transform = "translate(-50%, -50%) scale(1)";
+            createJiggleEffect(image);
+          }, 500);
+
+          setTimeout(() => {
+            image.style.transform = "translate(-50%, -50%) scale(0)";
+            image.style.opacity = "0";
+          }, 5000);
+
+          setTimeout(() => {
+            image.remove();
+          }, 6000);
         } else if (pureMessage.trim().toLowerCase() === "/tiggy whitepowder") {
           const fan = document.createElement("img");
           fan.src =
@@ -2873,6 +3038,12 @@ Make sure to follow all the instructions while answering questions.
         }
       }
       if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: Date.now(),
+        });
         async function jurorsay(juror, message) {
           if (juror == "J1") {
             const tam = push(messagesRef);
