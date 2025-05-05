@@ -1743,12 +1743,12 @@ function sleep(ms) {
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
     if (message) {
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
+      const userMessageRef = push(messagesRef);
+      await update(userMessageRef, {
+        User: email,
+        Message: message,
+        Date: Date.now(),
+      });
       if (pureMessage.trim().toLowerCase().startsWith("/ai ")) {
         const question = message.substring(4).trim();
 
@@ -2014,7 +2014,6 @@ Make sure to follow all the instructions while answering questions.
             ? email.replace(/\./g, "*")
             : "anonymous";
         if (pureMessage.trim().toLowerCase() === "/snake leaderboard") {
-
           try {
             const scoresRef = ref(database, "SnakeScores");
             const scoresSnapshot = await get(scoresRef);
@@ -2230,11 +2229,129 @@ Make sure to follow all the instructions while answering questions.
             "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
           );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy whitepowder") {
+          const fan = document.createElement("img");
+          fan.src =
+            "https://upload.wikimedia.org/wikipedia/commons/1/17/Ventilatore_a_soffitto_%283%29.png";
+          fan.style.position = "fixed";
+          fan.style.top = "20px";
+          fan.style.left = "50%";
+          fan.style.transform = "translateX(-50%)";
+          fan.style.width = "300px";
+          fan.style.zIndex = "2147483646";
+          document.body.appendChild(fan);
+
+          const container = document.createElement("div");
+          container.style.position = "fixed";
+          container.style.top = "50%";
+          container.style.left = "50%";
+          container.style.transform = "translate(-50%, -50%) scale(1)";
+          container.style.zIndex = "2147483647";
+          container.style.width = "200px";
+          container.style.height = "200px";
+          container.style.borderRadius = "16px";
+          container.style.overflow = "hidden";
+          container.style.transition =
+            "top 1s ease-in-out, transform 1s ease-in-out";
+          document.body.appendChild(container);
+
+          const wrapper = document.createElement("div");
+          wrapper.style.position = "relative";
+          wrapper.style.width = "100%";
+          wrapper.style.height = "100%";
+          container.appendChild(wrapper);
+
+          const image1 = document.createElement("img");
+          image1.src =
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+          image1.style.position = "absolute";
+          image1.style.width = "100%";
+          image1.style.height = "100%";
+          image1.style.objectFit = "contain";
+          image1.style.transition = "opacity 1s ease-in-out";
+          wrapper.appendChild(image1);
+
+          const image2 = document.createElement("img");
+          image2.src = "https://i.postimg.cc/m2wv0zcM/tiggypowder.png";
+          image2.style.position = "absolute";
+          image2.style.width = "100%";
+          image2.style.height = "100%";
+          image2.style.objectFit = "contain";
+          image2.style.opacity = "0";
+          image2.style.transition = "opacity 1s ease-in-out";
+          wrapper.appendChild(image2);
+
+          setTimeout(() => {
+            container.style.top = "100px";
+          }, 1000);
+
+          setTimeout(() => {
+            image2.style.opacity = "1";
+
+            for (let i = 0; i < 200; i++) {
+              const particle = document.createElement("div");
+              particle.style.position = "fixed";
+              particle.style.width = `${2 + Math.random() * 4}px`;
+              particle.style.height = particle.style.width;
+              particle.style.borderRadius = "50%";
+              particle.style.backgroundColor = "white";
+              particle.style.opacity = "0";
+              particle.style.pointerEvents = "none";
+              particle.style.zIndex = "2147483646";
+
+              particle.style.left = "50%";
+              particle.style.top = "100px";
+              particle.style.transform = "translate(-50%, -50%) scale(1)";
+              particle.style.transition =
+                "transform 5s ease-out, opacity 1s ease-in-out";
+
+              document.body.appendChild(particle);
+
+              const angle = Math.random() * 2 * Math.PI;
+              const distance = Math.random() * 300 + 50;
+              const x = Math.cos(angle) * distance;
+              const y = Math.sin(angle) * distance;
+
+              setTimeout(() => {
+                particle.style.opacity = "1";
+                particle.style.transform = `translate(${x}px, ${y}px) scale(${Math.random() * 0.5 + 0.5})`;
+              }, 100);
+
+              setTimeout(() => {
+                particle.style.opacity = "0";
+              }, 5000);
+
+              setTimeout(() => {
+                particle.remove();
+              }, 6000);
+            }
+          }, 2000);
+
+          setTimeout(() => {
+            container.style.top = "50%";
+          }, 3000);
+
+          setTimeout(() => {
+            container.style.opacity = "0";
+            fan.style.opacity = "0";
+          }, 7000);
+
+          setTimeout(() => {
+            container.remove();
+            fan.remove();
+          }, 8000);
           tiggysay("hmm?");
-          await sleep(1000);
+          await sleep(2000);
           tiggysay("angry");
-          await sleep(1000);
+          await sleep(3000);
           tiggysay("*WHINE!* Tiggy Angry! *floof*");
+          await sleep(2000);
+          const tiggy = push(messagesRef);
+          await update(tiggy, {
+            User: BOT_USERS.TIGGYBOT,
+            Message:
+              "Maybe it wasn't the best idea to throw Tiggy onto the ceiling fan...",
+            Date: Date.now(),
+          });
         } else {
           const now = new Date();
           const utcMilliseconds = now.getTime();
@@ -2608,7 +2725,7 @@ Make sure to follow all the instructions while answering questions.
             }, 5000);
           }
         }
-      } 
+      }
       if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
         async function jurorsay(juror, message) {
           if (juror == "J1") {
@@ -2769,20 +2886,20 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J12", "Not guilty.");
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
-      } 
+      }
 
-    const snapshot = await get(messagesRef);
-    const messages = snapshot.val() || {};
+      const snapshot = await get(messagesRef);
+      const messages = snapshot.val() || {};
 
-    const allMessageIds = Object.keys(messages).sort();
-    if (allMessageIds.length > 0) {
-      const latestMessageId = allMessageIds[allMessageIds.length - 1];
-      await markMessagesAsRead(currentChat, latestMessageId);
+      const allMessageIds = Object.keys(messages).sort();
+      if (allMessageIds.length > 0) {
+        const latestMessageId = allMessageIds[allMessageIds.length - 1];
+        await markMessagesAsRead(currentChat, latestMessageId);
+      }
     }
-  }
-  document.getElementById("bookmarklet-gui").scrollTop = 0;
-  isSending = false;
-  sendButton.disabled = false;
+    document.getElementById("bookmarklet-gui").scrollTop = 0;
+    isSending = false;
+    sendButton.disabled = false;
   }
   function formatDate(timestamp) {
     const messageDate = new Date(timestamp);
