@@ -2263,30 +2263,96 @@ Make sure to follow all the instructions while answering questions.
               tiggydialoguehappy[random(tiggydialoguehappy.length)],
             Date: Date.now(),
           });
-          window.open(
-            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
-          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy decapitate") {
           const tiggydialogue = push(messagesRef);
-          await update(tiggydialogue, {
-            User: BOT_USERS.TIGGYBOT,
-            Message: "*shing* *draws out sword*",
-            Date: Date.now(),
-          });
+          const createSwordEffect = (element) => {
+            const sword = document.createElement("div");
+            sword.textContent = "🗡️";
+            sword.style.position = "fixed";
+            sword.style.top = "50%";
+            sword.style.left = "-200px";
+            sword.style.transform = "translate(0, -50%) rotate(90deg)";
+            sword.style.fontSize = "150px";
+            sword.style.transition = "left 1.5s ease";
+            sword.style.zIndex = "2147483648";
+            document.body.appendChild(sword);
+
+            const createRedParticles = () => {
+              for (let i = 0; i < 20; i++) {
+                const particle = document.createElement("div");
+                particle.style.position = "fixed";
+                particle.style.width = "8px";
+                particle.style.height = "8px";
+                particle.style.backgroundColor = "red";
+                particle.style.borderRadius = "50%";
+                particle.style.left = `${50 + Math.random() * 10 - 5}%`;
+                particle.style.top = `${50 + Math.random() * 10 - 5}%`;
+                particle.style.opacity = "1";
+                particle.style.zIndex = "2147483648";
+                particle.style.transition = "all 1s ease";
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                  particle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+                  particle.style.opacity = "0";
+                }, 500);
+
+                setTimeout(() => {
+                  particle.remove();
+                }, 1500);
+              }
+            };
+
+            setTimeout(() => {
+              sword.style.left = "100%";
+              createRedParticles();
+
+              setTimeout(() => {
+                element.src = "https://i.postimg.cc/L5CsDH1Z/tiggydecap.png";
+                element.style.border = "5px solid red";
+              }, 800); // Change image after the sword passes
+            }, 500);
+
+            setTimeout(() => {
+              sword.remove();
+            }, 2000);
+          };
+
+          const image = document.createElement("img");
+          image.src =
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+          image.style.position = "fixed";
+          image.style.top = "50%";
+          image.style.left = "50%";
+          image.style.transform = "translate(-50%, -50%) scale(0)";
+          image.style.width = "200px";
+          image.style.height = "200px";
+          image.style.border = "5px solid red";
+          image.style.borderRadius = "8px";
+          image.style.transition = "transform 1.5s ease, opacity 1.5s ease";
+          image.style.opacity = "1";
+          image.style.zIndex = "2147483647";
+          document.body.appendChild(image);
+
+          setTimeout(() => {
+            image.style.transform = "translate(-50%, -50%) scale(1)";
+            createSwordEffect(image);
+          }, 500);
+
+          setTimeout(() => {
+            image.style.transform = "translate(-50%, -50%) scale(0)";
+            image.style.opacity = "0";
+          }, 7000);
+
+          setTimeout(() => {
+            image.remove();
+          }, 8000);
+          tiggysay("*shing* *draws out sword*");
           await sleep(1000);
           push(messagesRef);
-          await update(tiggydialogue, {
-            User: BOT_USERS.TIGGYBOT,
-            Message: "*slices* *chop*",
-            Date: Date.now(),
-          });
+          tiggysay("*slices* *chop*");
           await sleep(1000);
-          push(messagesRef);
-          await update(tiggydialogue, {
-            User: BOT_USERS.TIGGY,
-            Message: "*oof* *whine...*",
-            Date: Date.now(),
-          });
+          tiggysay("*oof* *whine...*");
           await sleep(1000);
           push(messagesRef);
           await update(tiggydialogue, {
@@ -2294,9 +2360,6 @@ Make sure to follow all the instructions while answering questions.
             Message: "Another Tiggy comes, seeing the chopped Tiggy.",
             Date: Date.now(),
           });
-          window.open(
-            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
-          );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy poke") {
           tiggysay("angry");
           await sleep(1000);
