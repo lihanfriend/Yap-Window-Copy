@@ -2173,6 +2173,89 @@ Make sure to follow all the instructions while answering questions.
           });
         } else if (pureMessage.trim().toLowerCase() === "/tiggy pet") {
           const tiggydialogue = push(messagesRef);
+          const createSquishEffect = (element) => {
+            const hand = document.createElement("div");
+            hand.textContent = "🫳🏼";
+            hand.style.position = "fixed";
+            hand.style.top = "-100px";
+            hand.style.left = "50%";
+            hand.style.transform = "translate(-50%, 0)";
+            hand.style.fontSize = "100px";
+            hand.style.transition = "top 1.5s ease";
+            hand.style.zIndex = "2147483648";
+            document.body.appendChild(hand);
+
+            const createGrayParticles = () => {
+              for (let i = 0; i < 15; i++) {
+                const particle = document.createElement("div");
+                particle.style.position = "fixed";
+                particle.style.width = "10px";
+                particle.style.height = "10px";
+                particle.style.backgroundColor = "gray";
+                particle.style.borderRadius = "50%";
+                particle.style.left = `${50 + Math.random() * 10 - 5}%`;
+                particle.style.top = `${50 + Math.random() * 10 - 5}%`;
+                particle.style.opacity = "1";
+                particle.style.zIndex = "2147483648";
+                particle.style.transition = "all 1s ease";
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                  particle.style.transform = `translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px)`;
+                  particle.style.opacity = "0";
+                }, 500);
+
+                setTimeout(() => {
+                  particle.remove();
+                }, 1500);
+              }
+            };
+
+            setTimeout(() => {
+              hand.style.top = "40%"; // Stops higher, closer to the top of Tiggy
+            }, 500);
+
+            setTimeout(() => {
+              element.style.transform = "translate(-50%, -50%) scale(1, 0.5)";
+              createGrayParticles();
+            }, 1500); // Squish effect remains synchronized with the hand motion
+
+            setTimeout(() => {
+              element.style.transform = "translate(-50%, -50%) scale(1, 1)";
+              hand.remove();
+            }, 3000);
+          };
+
+          const image = document.createElement("img");
+          image.src =
+            "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
+          image.style.position = "fixed";
+          image.style.top = "50%";
+          image.style.left = "50%";
+          image.style.transform = "translate(-50%, -50%) scale(0)";
+          image.style.width = "200px";
+          image.style.height = "200px";
+          image.style.border = "5px solid blue";
+          image.style.borderRadius = "8px";
+          image.style.transition = "transform 1.5s ease, opacity 1.5s ease";
+          image.style.opacity = "1";
+          image.style.zIndex = "2147483647";
+          document.body.appendChild(image);
+
+          setTimeout(() => {
+            image.style.transform = "translate(-50%, -50%) scale(1)";
+            createSquishEffect(image);
+          }, 500);
+
+          setTimeout(() => {
+            image.style.transform = "translate(-50%, -50%) scale(0)";
+            image.style.opacity = "0";
+          }, 7000);
+
+          setTimeout(() => {
+            image.remove();
+          }, 8000);
+
           await update(tiggydialogue, {
             User: BOT_USERS.TIGGY,
             Message:
