@@ -3206,6 +3206,12 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J1", "Well, we have a verdict, then.");
       }
       if (pureMessage.trim().toLowerCase() === "/love") {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: Date.now(),
+        });
         async function lovebotsay(e) {
           const userMessageRef = push(messagesRef);
           await update(userMessageRef, {
