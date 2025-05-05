@@ -29,6 +29,7 @@ function sleep(ms) {
     J10: "[Juror 10]",
     J11: "[Juror 11]",
     J12: "[Juror 12]",
+    LOVE: "[Love Bot]"
   };
   const users = {};
   const email = auth.currentUser.email;
@@ -2171,14 +2172,14 @@ Make sure to follow all the instructions while answering questions.
             Message: `Welcome to your own interactive Tiggy in Yap Window! With this bot, you can interact with Tiggy however you like!`,
             Date: Date.now(),
           });
-          push(messagesRef);
-          await update(tiggyhelp, {
+          const tiggyhelp2 = push(messagesRef);
+          await update(tiggyhelp2, {
             User: BOT_USERS.TIGGYBOT,
             Message: `Tiggy is fed every day at 8am, 1pm, and 6pm. Don't mess with Tiggy when it is hungry!`,
             Date: Date.now(),
           });
-          push(messagesRef);
-          await update(tiggyhelp, {
+          const tiggyhelp3 = push(messagesRef);
+          await update(tiggyhelp3, {
             User: BOT_USERS.TIGGYBOT,
             Message: `/tiggy, /tiggy pet, /tiggy jiggle, /tiggy decapitate, /tiggy jiggle, /tiggy whitepowder`,
             Date: Date.now(),
@@ -2381,7 +2382,7 @@ Make sure to follow all the instructions while answering questions.
             "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
           );
         } else if (pureMessage.trim().toLowerCase() === "/tiggy jiggle") {
-          if (random(10) == 10) {
+          if (random(10) > 7) {
             const createJiggleEffect = (element, onJiggleEnd) => {
               let direction = 1; // 1 for right, -1 for left
               let position = 0;
@@ -3203,6 +3204,25 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J12", "Not guilty.");
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
+      } 
+      if (pureMessage.trim().toLowerCase() === "/love") {
+        function lovebotsay(e) {
+          const userMessageRef = push(messagesRef);
+          await update(userMessageRef, {
+            User: BOT_USERS.LOVE,
+            Message: e,
+            Date: Date.now(),
+          });
+        }
+        
+      }
+      else {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: Date.now(),
+        });
       }
 
       const snapshot = await get(messagesRef);
