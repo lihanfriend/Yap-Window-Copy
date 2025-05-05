@@ -2374,113 +2374,257 @@ Make sure to follow all the instructions while answering questions.
             Date: Date.now(),
           });
         } else if (pureMessage.trim().toLowerCase() === "/tiggy poke") {
+          let isAnimating = false; // Prevent overlapping animations
+
+          const createLightningBolts = (parentElement) => {
+            const boltCount = 20; // Increased number of bolts
+            const bolts = [];
+            const radius = 120; // Distance of bolts from the center
+
+            for (let i = 0; i < boltCount; i++) {
+              const bolt = document.createElement("div");
+              bolt.textContent = "⚡"; // Lightning bolt emoji
+              bolt.style.position = "absolute";
+              bolt.style.fontSize = `${Math.random() * 20 + 30}px`; // Random size for variety
+              bolt.style.color = "yellow";
+              bolt.style.zIndex = "2147483648"; // Bring bolts to the front
+              const angle = (i / boltCount) * 2 * Math.PI; // Distribute bolts in a circle
+              const x = Math.cos(angle) * radius + Math.random() * 40 - 20; // Add randomness
+              const y = Math.sin(angle) * radius + Math.random() * 40 - 20;
+              bolt.style.left = `calc(50% + ${x}px)`;
+              bolt.style.top = `calc(50% + ${y}px)`;
+              bolt.style.animation = `flicker ${Math.random() * 0.5 + 0.2}s infinite`;
+              parentElement.appendChild(bolt);
+              bolts.push(bolt);
+            }
+
+            setTimeout(() => {
+              bolts.forEach((bolt) => bolt.remove());
+            }, 2000); // Remove bolts after animation
+          };
+
+          const createAngryEffect = (element, duration, onEffectEnd) => {
+            let scaleDirection = 1; // Pulse direction: 1 for grow, -1 for shrink
+            const maxScale = 1.2;
+            const minScale = 0.8;
+            let currentScale = 1;
+
+            const pulseInterval = setInterval(() => {
+              currentScale += scaleDirection * 0.1;
+              if (currentScale >= maxScale || currentScale <= minScale) {
+                scaleDirection *= -1; // Reverse direction at bounds
+              }
+              element.style.transform = `translate(-50%, -50%) scale(${currentScale})`;
+            }, 100); // Smooth pulsing effect
+
+            createLightningBolts(element); // Add lightning bolts
+
+            setTimeout(() => {
+              clearInterval(pulseInterval);
+              element.style.transform = "translate(-50%, -50%) scale(1)"; // Reset scale
+              onEffectEnd();
+            }, duration);
+          };
+
+          const createImage = (src, position, onEffectEnd) => {
+            const image = document.createElement("img");
+            image.src = src;
+            image.style.position = "fixed";
+            image.style.top = "50%";
+            image.style.left = position;
+            image.style.transform = "translate(-50%, -50%) scale(0)";
+            image.style.width = "200px";
+            image.style.height = "200px";
+            image.style.border = "5px solid red"; // Angry red border
+            image.style.borderRadius = "8px";
+            image.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+            image.style.opacity = "1";
+            image.style.zIndex = "2147483647"; // Image zIndex
+            document.body.appendChild(image);
+
+            setTimeout(() => {
+              image.style.transform = "translate(-50%, -50%) scale(1)";
+              createAngryEffect(image, 2000, onEffectEnd); // Angry effect for 2 seconds
+            }, 500);
+
+            setTimeout(() => {
+              image.style.transform = "translate(-50%, -50%) scale(0)";
+              image.style.opacity = "0";
+            }, 3000); // Fade-out after effect ends
+
+            setTimeout(() => {
+              image.remove();
+            }, 3500);
+
+            return image;
+          };
+
+          const startAnimation = () => {
+            if (isAnimating) return; // Prevent starting a new animation if one is already running
+            isAnimating = true;
+
+            const onEffectEnd = () => {
+              isAnimating = false; // Allow new animations to start after current one finishes
+            };
+
+            createImage(
+              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+              "50%",
+              onEffectEnd,
+            );
+          };
+
+          // Add keyframes for flickering effect
+          const style = document.createElement("style");
+          style.textContent = `
+    @keyframes flicker {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+`;
+          document.head.appendChild(style);
+
+          // Start animation
+          startAnimation();
+
           tiggysay("angry");
           await sleep(1000);
           tiggysay("[scuttles away]");
         } else if (pureMessage.trim().toLowerCase() === "/tiggy jiggle") {
           if (random(10) > 7) {
-            const createJiggleEffect = (element, onJiggleEnd) => {
+            let isAnimating = false; // Prevent overlapping animations
+
+            const createJiggleEffect = (
+              element,
+              jiggleDistance,
+              jiggleDuration,
+              onJiggleEnd,
+            ) => {
               let direction = 1; // 1 for right, -1 for left
               let position = 0;
-              let isJiggling = true;
+              const jiggleSpeed = 15; // Adjust speed for smoother or faster jiggle
+              const stepSize = jiggleDistance / 20; // Calculate step size based on distance
 
               const jiggleInterval = setInterval(() => {
-                if (!isJiggling) return;
-
-                position += 50 * direction; // Move 50px at a time
+                position += stepSize * direction;
                 element.style.transform = `translate(-50%, -50%) translateX(${position}px)`;
 
-                if (position >= 400 || position <= -400) {
+                if (position >= jiggleDistance || position <= -jiggleDistance) {
                   direction *= -1; // Reverse direction at bounds
                 }
-              }, 20); // Fast jiggle update
+              }, jiggleSpeed);
 
               setTimeout(() => {
-                isJiggling = false; // Stop jiggle
-                clearInterval(jiggleInterval); // Clear the interval
+                clearInterval(jiggleInterval);
                 element.style.transform = "translate(-50%, -50%)"; // Reset position
-                onJiggleEnd(); // Callback for after jiggle ends
-              }, 4000); // Jiggle for 4 seconds
+                onJiggleEnd();
+              }, jiggleDuration);
             };
 
-            const createImageClone = (src, leftPosition, onJiggleEnd) => {
+            const createImage = (
+              src,
+              position,
+              jiggleDistance,
+              jiggleDuration,
+              onJiggleEnd,
+            ) => {
               const image = document.createElement("img");
               image.src = src;
               image.style.position = "fixed";
               image.style.top = "50%";
-              image.style.left = leftPosition;
+              image.style.left = position;
               image.style.transform = "translate(-50%, -50%) scale(0)";
               image.style.width = "200px";
               image.style.height = "200px";
               image.style.border = "5px solid blue";
               image.style.borderRadius = "8px";
-              image.style.transition = "transform 1.5s ease, opacity 1.5s ease";
+              image.style.transition = "transform 1s ease, opacity 1s ease";
               image.style.opacity = "1";
               image.style.zIndex = "2147483647";
               document.body.appendChild(image);
 
               setTimeout(() => {
                 image.style.transform = "translate(-50%, -50%) scale(1)";
-                createJiggleEffect(image, onJiggleEnd);
+                createJiggleEffect(
+                  image,
+                  jiggleDistance,
+                  jiggleDuration,
+                  onJiggleEnd,
+                );
               }, 500);
 
               setTimeout(() => {
                 image.style.transform = "translate(-50%, -50%) scale(0)";
                 image.style.opacity = "0";
-              }, 5500);
+              }, jiggleDuration + 1500);
 
               setTimeout(() => {
                 image.remove();
-              }, 6000);
+              }, jiggleDuration + 2000);
 
               return image;
             };
 
-            const createSmallTiggy = (leftPosition, topPosition) => {
+            const createSmallTiggy = () => {
               const smallImage = document.createElement("img");
               smallImage.src =
                 "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg";
               smallImage.style.position = "fixed";
-              smallImage.style.top = topPosition; // Same position as the original Tiggy
-              smallImage.style.left = leftPosition; // Same position as the original Tiggy
+              smallImage.style.top = "50%";
+              smallImage.style.left = "50%";
               smallImage.style.transform = "translate(-50%, -50%) scale(0)";
-              smallImage.style.width = "100px"; // Smaller size
-              smallImage.style.height = "100px"; // Smaller size
+              smallImage.style.width = "100px";
+              smallImage.style.height = "100px";
               smallImage.style.transition =
-                "transform 1s ease, opacity 1s ease";
+                "transform 0.5s ease, opacity 0.5s ease";
               smallImage.style.opacity = "1";
               smallImage.style.zIndex = "2147483647";
               document.body.appendChild(smallImage);
 
               setTimeout(() => {
                 smallImage.style.transform = "translate(-50%, -50%) scale(1)";
-              }, 500);
+              }, 300);
 
               setTimeout(() => {
                 smallImage.style.transform = "translate(-50%, -50%) scale(0)";
                 smallImage.style.opacity = "0";
-              }, 5000);
+              }, 2000);
 
               setTimeout(() => {
                 smallImage.remove();
-              }, 6000);
+              }, 2500);
             };
 
-            const onJiggleEnd = () => {
-              createSmallTiggy("50%", "50%");
+            const startAnimation = () => {
+              if (isAnimating) return; // Prevent starting a new animation if one is already running
+              isAnimating = true;
+
+              const jiggleDistance = 400; // Reduced jiggle distance
+              const jiggleDuration = 2000; // Jiggle duration
+
+              const onJiggleEnd = () => {
+                createSmallTiggy();
+                isAnimating = false; // Allow new animations to start after current one finishes
+              };
+
+              createImage(
+                "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+                "45%",
+                jiggleDistance,
+                jiggleDuration,
+                onJiggleEnd,
+              );
+              createImage(
+                "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
+                "55%",
+                jiggleDistance,
+                jiggleDuration,
+                onJiggleEnd,
+              );
             };
 
-            // Create two Tiggies with the jiggle effect
-            const image1 = createImageClone(
-              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
-              "45%",
-              onJiggleEnd,
-            );
-            const image2 = createImageClone(
-              "https://beaniepedia.com/beanies/files/2019/04/tiggytigersparklyrainbow.jpg",
-              "55%",
-              onJiggleEnd,
-            );
+            // Start animation
+            startAnimation();
 
             tiggysay("*jiggle*");
             await sleep(500);
