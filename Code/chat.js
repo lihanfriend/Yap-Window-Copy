@@ -3218,9 +3218,6 @@ Make sure to follow all the instructions while answering questions.
         } else {
           finaltiggymessage = `*${finaltiggymessage}*`;
         }
-        if (finaltiggymessage == "**") {
-          finaltiggymessage = "";
-        }
         const tiggymessage = push(messagesRef);
         await update(tiggymessage, {
           User: BOT_USERS.TIGGY,
