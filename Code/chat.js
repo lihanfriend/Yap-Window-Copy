@@ -3203,6 +3203,7 @@ Make sure to follow all the instructions while answering questions.
         sortedlist = generateRandomNumbers(1, tiggyargumentmessage.length).sort(
           (a, b) => a - b,
         );
+        finaltiggymessage = '';
         for (let i = 0; i < sortedlist.length; i++) {
           finaltiggymessage += tiggyargumentmessage[sortedlist[i]];
         }
