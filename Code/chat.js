@@ -3390,7 +3390,7 @@ Make sure to follow all the instructions while answering questions.
       }
       if (pureMessage.trim().toLowerCase().startsWith("/love")) {
         // Split the message into parts
-        const parts = pureMessage.trim().toLowerCase().split(" ");
+        const parts = pureMessage.trim().split(" ");
 
         // Check if there are enough parts
         if (parts.length < 2) {
@@ -3421,7 +3421,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} wants ${person1} to be their name also redacted!`,
+              `<p style="font-size: 16px;">${email}</p> wants <p style="font-size: 16px;">${person1}</p> to be their name also redacted!`,
             );
             break;
 
@@ -3431,7 +3431,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} wants ${person2} to be ${person1}'s name redacted!`,
+              `${email} wants <p style="font-size: 16px;">${person2}</p> to be <p style="font-size: 16px;">${person1}</p>'s name redacted!`,
             );
             break;
 
@@ -3442,7 +3442,7 @@ Make sure to follow all the instructions while answering questions.
               );
               break;
             }
-            lovebotsay(`${email} ships ${person1} with ${person2}: ${ship}!`);
+            lovebotsay(`${email} ships <p style="font-size: 16px;">${person1}</p> with <p style="font-size: 16px;">${person2}</p>: <p style="font-size: 16px;">${ship}</p>!`);
             break;
 
           case "commutative":
@@ -3453,7 +3453,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} hopes that ${person1} and ${person2} will form a commutative relationship!`,
+              `$<p style="font-size: 16px;">{email} hopes that ${person1}</p> and <p style="font-size: 16px;">${person2}</p> will form a commutative relationship!`,
             );
             break;
 
@@ -3465,7 +3465,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} hopes that ${person1} and ${person2} will break up!`,
+              `${email} hopes that <p style="font-size: 16px;">${person1}</p> and <p style="font-size: 16px;">${person2}</p> will break up!`,
             );
             break;
 
