@@ -1196,17 +1196,17 @@ function sleep(ms) {
       instructions.style.maxWidth = "600px";
       instructions.style.textAlign = "left";
       instructions.innerHTML = `
-      <p><strong>Objective:</strong> Eat as much food (red squares) as possible without colliding with walls or yourself.</p>
-      <p><strong>Controls:</strong></p>
+      <p><strong>Objective:</strong> Eat as much food (red squares) as possible without colliding with walls or yourself.
+      <p><strong>Controls:</strong>
       <ul style="margin-left: 20px; padding-left: 20px;">
         <li>Arrow Keys: ↑ ↓ ← →</li>
         <li>WASD: W (up), A (left), S (down), D (right)</li>
         <li>IJKL: I (up), J (left), K (down), L (right)</li>
         <li>Touch Controls: Use the on-screen buttons</li>
       </ul>
-      <p><strong>Scoring:</strong> Each food item eaten increases your score by 1 point.</p>
-      <p><strong>Speed:</strong> The game gets faster as your score increases.</p>
-      <p><strong>Game Over:</strong> Colliding with walls or your own tail ends the game.</p>
+      <p><strong>Scoring:</strong> Each food item eaten increases your score by 1 point.
+      <p><strong>Speed:</strong> The game gets faster as your score increases.
+      <p><strong>Game Over:</strong> Colliding with walls or your own tail ends the game.
     `;
       overlay.appendChild(instructions);
 
@@ -3390,7 +3390,7 @@ Make sure to follow all the instructions while answering questions.
       }
       if (pureMessage.trim().toLowerCase().startsWith("/love")) {
         // Split the message into parts
-        const parts = pureMessage.trim().split(" ");
+        const parts = pureMessage.trim().toLowerCase().split(" ");
 
         // Check if there are enough parts
         if (parts.length < 2) {
@@ -3421,7 +3421,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `<p style="font-size: 16px;">${email}</p> wants <p style="font-size: 16px;">${person1}</p> to be their name also redacted!`,
+              `${email} wants <button onclick="alert(person1)"><b>${person1}</b></button> to be their name also redacted!`,
             );
             break;
 
@@ -3431,7 +3431,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} wants <p style="font-size: 16px;">${person2}</p> to be <p style="font-size: 16px;">${person1}</p>'s name redacted!`,
+              `${email} wants <button onclick="alert(person2)"><b>${person2}</b></button> to be <button onclick="alert(person1)"><b>${person1}</b></button>'s name redacted!`,
             );
             break;
 
@@ -3442,7 +3442,7 @@ Make sure to follow all the instructions while answering questions.
               );
               break;
             }
-            lovebotsay(`${email} ships <p style="font-size: 16px;">${person1}</p> with <p style="font-size: 16px;">${person2}</p>: <p style="font-size: 16px;">${ship}</p>!`);
+            lovebotsay(`${email} ships <button onclick="alert(person1)"><b>${person1}</b></button> with <button onclick="alert(person2)"><b>${person2}</b></button>: <button onclick="alert('What a nice ship name!')"><b>${ship}</b></button>!`);
             break;
 
           case "commutative":
@@ -3453,7 +3453,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `$<p style="font-size: 16px;">{email} hopes that ${person1}</p> and <p style="font-size: 16px;">${person2}</p> will form a commutative relationship!`,
+              `${email} hopes that <button onclick="alert(person1)"><b>${person1}</b></button> and <button onclick="alert(person2)"><b>${person2}</b></button> will form a commutative relationship!`,
             );
             break;
 
@@ -3465,7 +3465,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} hopes that <p style="font-size: 16px;">${person1}</p> and <p style="font-size: 16px;">${person2}</p> will break up!`,
+              `${email} hopes that <button onclick="alert(person1)"><b>${person1}</b></button> and <button onclick="alert(person2)"><b>${person2}</b></button> will break up!`,
             );
             break;
 
