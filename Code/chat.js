@@ -2184,6 +2184,9 @@ Make sure to follow all the instructions while answering questions.
             Message: `/tiggy, /tiggy pet, /tiggy jiggle, /tiggy decapitate, /tiggy poke, /tiggy whitepowder`,
             Date: Date.now(),
           });
+          isSending = false;
+          sendButton.disabled = false;
+          return;
         } else if (pureMessage.trim().toLowerCase() === "/tiggy pet") {
           const tiggydialogue = push(messagesRef);
           const createSquishEffect = (element) => {
@@ -3401,6 +3404,8 @@ Make sure to follow all the instructions while answering questions.
         // Check if there are enough parts
         if (parts.length < 2) {
           lovebotsay("Invalid command. Please specify a mode.");
+          isSending = false;
+          sendButton.disabled = false;
           return;
         }
 
@@ -3448,7 +3453,9 @@ Make sure to follow all the instructions while answering questions.
               );
               break;
             }
-            lovebotsay(`${email} ships <button onclick="alert('That's one!')"><b>${person1}</b></button> with <button onclick="alert('That's two!')"><b>${person2}</b></button>: <button onclick="alert('What a nice ship name!')"><b>${ship}</b></button>!`);
+            lovebotsay(
+              `${email} ships <button onclick="alert('That's one!')"><b>${person1}</b></button> with <button onclick="alert('That's two!')"><b>${person2}</b></button>: <button onclick="alert('What a nice ship name!')"><b>${ship}</b></button>!`,
+            );
             break;
 
           case "commutative":
@@ -3480,8 +3487,12 @@ Make sure to follow all the instructions while answering questions.
             break;
 
           case "help":
-            lovebotsay("Tell your friends (or your name redacted) to go take some action! Disclaimer: this bot is only a joke and is not affiliated with any Human Development topic.");
-            lovebotsay("/love pull person1, /love push person1 person2, /love ship person1 person2 shipname, /love commutative person1 person2, /love breakup person1 person2");
+            lovebotsay(
+              "Tell your friends (or your name redacted) to go take some action! Disclaimer: this bot is only a joke and is not affiliated with any Human Development topic.",
+            );
+            lovebotsay(
+              "/love pull person1, /love push person1 person2, /love ship person1 person2 shipname, /love commutative person1 person2, /love breakup person1 person2",
+            );
             break;
 
           default:
