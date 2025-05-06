@@ -3184,7 +3184,7 @@ Make sure to follow all the instructions while answering questions.
             }, 5000);
           }
           tiggyargumentmessage = message.split(" ");
-          tiggymessagewordcount = random(tiggyargumentmessage.length);
+          tiggymessagewordcount = random(tiggyargumentmessage.length - 1);
           function getRandomSet(list, numElements) {
             if (numElements > list.length) {
               return "Number of elements to choose cannot exceed list length";
@@ -3204,7 +3204,7 @@ Make sure to follow all the instructions while answering questions.
           }
           sortedlist = generateRandomNumbers(
             1,
-            tiggyargumentmessage.length,
+            tiggyargumentmessage.length - 1,
           ).sort((a, b) => a - b);
           finaltiggymessage = "";
           for (let i = 0; i < sortedlist.length; i++) {
