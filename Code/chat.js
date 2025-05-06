@@ -3203,16 +3203,16 @@ Make sure to follow all the instructions while answering questions.
         sortedlist = generateRandomNumbers(1, tiggyargumentmessage.length).sort(
           (a, b) => a - b,
         );
-        finaltiggymessage = '';
+        finaltiggymessage = "";
         for (let i = 0; i < sortedlist.length; i++) {
           finaltiggymessage += tiggyargumentmessage[sortedlist[i]];
-          finaltiggymessage += ' ';
+          finaltiggymessage += " ";
         }
 
         if (Math.random() > 0.5) {
-            finaltiggymessage = `*${finaltiggymessage}?*`
+          finaltiggymessage = `*${finaltiggymessage}?*`;
         } else {
-            finaltiggymessage = `*${finaltiggymessage}*`
+          finaltiggymessage = `*${finaltiggymessage}*`;
         }
         const tiggymessage = push(messagesRef);
         await update(tiggymessage, {
@@ -3388,53 +3388,94 @@ Make sure to follow all the instructions while answering questions.
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
       }
-      else if (pureMessage.trim().toLowerCase() === "/love") {
-        const userMessageRef = push(messagesRef);
-        await update(userMessageRef, {
-          User: email,
-          Message: message,
-          Date: Date.now(),
-        });
-        async function lovebotsay(e) {
-          const lovebot = push(messagesRef);
-          await update(lovebot, {
+      if (pureMessage.trim().toLowerCase().startsWith("/love")) {
+        // Split the message into parts
+        const parts = pureMessage.trim().toLowerCase().split(" ");
+
+        // Check if there are enough parts
+        if (parts.length < 2) {
+          lovebotsay("Invalid command. Please specify a mode.");
+          return;
+        }
+
+        const mode = parts[1]; // Command mode
+        const person1 = parts[2] || null; // First person
+        const person2 = parts[3] || null; // Second person
+        const ship = parts[4] || null; // Ship description (optional)
+
+        // Function to send a bot message
+        async function lovebotsay(message) {
+          const lovebotRef = push(messagesRef);
+          await update(lovebotRef, {
             User: BOT_USERS.LOVE,
-            Message: e,
+            Message: message,
             Date: Date.now(),
           });
         }
-        mode = pureMessage.trim().toLowerCase().split(" ")[1];
-        lovebotsay(mode);
-        person1 = pureMessage.trim().toLowerCase().split(" ")[2];
-        lovebotsay(person1);
-        person2 = pureMessage.trim().toLowerCase().split(" ")[3];
-        lovebotsay(person2);
-        ship = pureMessage.trim().toLowerCase().split(" ")[4];
-        lovebotsay(ship);
-        if (mode == "pull") {
-          lovebotsay(
-            `${email} wants ${person1} to be their name also redacted!`,
-          );
+
+        // Handle the mode logic
+        switch (mode) {
+          case "pull":
+            if (!person1) {
+              lovebotsay("Please specify a person for the 'pull' command.");
+              break;
+            }
+            lovebotsay(
+              `${email} wants ${person1} to be their name also redacted!`,
+            );
+            break;
+
+          case "push":
+            if (!person1 || !person2) {
+              lovebotsay("Please specify two people for the 'push' command.");
+              break;
+            }
+            lovebotsay(
+              `${email} wants ${person2} to be ${person1}'s name redacted!`,
+            );
+            break;
+
+          case "ship":
+            if (!person1 || !person2 || !ship) {
+              lovebotsay(
+                "Please specify two people and a ship description for the 'ship' command.",
+              );
+              break;
+            }
+            lovebotsay(`${email} ships ${person1} with ${person2}: ${ship}!`);
+            break;
+
+          case "commutative":
+            if (!person1 || !person2) {
+              lovebotsay(
+                "Please specify two people for the 'commutative' command.",
+              );
+              break;
+            }
+            lovebotsay(
+              `${email} hopes that ${person1} and ${person2} will form a commutative relationship!`,
+            );
+            break;
+
+          case "breakup":
+            if (!person1 || !person2) {
+              lovebotsay(
+                "Please specify two people for the 'breakup' command.",
+              );
+              break;
+            }
+            lovebotsay(
+              `${email} hopes that ${person1} and ${person2} will break up!`,
+            );
+            break;
+
+          case "yiyang":
+            lovebotsay("Fat Cat.");
+            break;
+
+          default:
+            lovebotsay("Unknown mode. Please use a valid command.");
         }
-        else if (mode == "push") {
-          lovebotsay(
-            `${email} wants ${person2} to be ${person1}'s name redacted!`,
-          );
-        }
-        else if (mode == "ship") {
-          lovebotsay(`${email} ships ${person1} with ${person2}: ${ship}!`);
-        }
-        else if (mode == "commutative") {
-          lovebotsay(
-            `${email} hopes that ${person1} and ${person2} will form a commutative relationship!`,
-          );
-        }
-        else if (mode == "breakup") {
-          lovebotsay(
-            `${email} hopes that ${person1} and ${person2} will break up!`,
-          );
-        }
-        else if (mode == "yiyang") {lovebotsay(`Fat Cat.`);}
       } else {
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
