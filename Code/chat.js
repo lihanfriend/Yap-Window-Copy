@@ -3389,8 +3389,14 @@ Make sure to follow all the instructions while answering questions.
         jurorsay("J1", "Well, we have a verdict, then.");
       }
       if (pureMessage.trim().toLowerCase().startsWith("/love")) {
+        const userMessageRef = push(messagesRef);
+        await update(userMessageRef, {
+          User: email,
+          Message: message,
+          Date: Date.now(),
+        });
         // Split the message into parts
-        const parts = pureMessage.trim().toLowerCase().split(" ");
+        const parts = pureMessage.trim().split(" ");
 
         // Check if there are enough parts
         if (parts.length < 2) {
@@ -3421,7 +3427,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} wants <button onclick="alert(person1)"><b>${person1}</b></button> to be their name also redacted!`,
+              `${email} wants <button onclick="alert('Imagine having to pull someone to get love.')"><b>${person1}</b></button> to be their name also redacted!`,
             );
             break;
 
@@ -3431,7 +3437,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} wants <button onclick="alert(person2)"><b>${person2}</b></button> to be <button onclick="alert(person1)"><b>${person1}</b></button>'s name redacted!`,
+              `${email} wants <button onclick="alert('I feel bad for them.')"><b>${person2}</b></button> to be <button onclick="alert('I feel bad for you too.')"><b>${person1}</b></button>'s name redacted!`,
             );
             break;
 
@@ -3442,7 +3448,7 @@ Make sure to follow all the instructions while answering questions.
               );
               break;
             }
-            lovebotsay(`${email} ships <button onclick="alert(person1)"><b>${person1}</b></button> with <button onclick="alert(person2)"><b>${person2}</b></button>: <button onclick="alert('What a nice ship name!')"><b>${ship}</b></button>!`);
+            lovebotsay(`${email} ships <button onclick="alert('That's one!')"><b>${person1}</b></button> with <button onclick="alert('That's two!')"><b>${person2}</b></button>: <button onclick="alert('What a nice ship name!')"><b>${ship}</b></button>!`);
             break;
 
           case "commutative":
@@ -3453,7 +3459,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} hopes that <button onclick="alert(person1)"><b>${person1}</b></button> and <button onclick="alert(person2)"><b>${person2}</b></button> will form a commutative relationship!`,
+              `${email} hopes that <button onclick="alert('New commutative relationship?')"><b>${person1}</b></button> and <button onclick="alert('Juicy gossip?')"><b>${person2}</b></button> will form a commutative relationship!`,
             );
             break;
 
@@ -3465,7 +3471,7 @@ Make sure to follow all the instructions while answering questions.
               break;
             }
             lovebotsay(
-              `${email} hopes that <button onclick="alert(person1)"><b>${person1}</b></button> and <button onclick="alert(person2)"><b>${person2}</b></button> will break up!`,
+              `${email} hopes that <button onclick="alert('What a way to go...')"><b>${person1}</b></button> and <button onclick="alert('So sad...')"><b>${person2}</b></button> will break up!`,
             );
             break;
 
