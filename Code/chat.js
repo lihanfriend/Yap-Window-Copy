@@ -3479,6 +3479,11 @@ Make sure to follow all the instructions while answering questions.
             lovebotsay("Fat Cat.");
             break;
 
+          case "help":
+            lovebotsay("Tell your friends (or your name redacted) to go take some action! Disclaimer: this bot is only a joke and is not affiliated with any Human Development topic.");
+            lovebotsay("/love pull person1, /love push person1 person2, /love ship person1 person2 shipname, /love commutative person1 person2, /love breakup person1 person2");
+            break;
+
           default:
             lovebotsay("Unknown mode. Please use a valid command.");
         }
