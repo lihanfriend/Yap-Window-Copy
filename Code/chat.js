@@ -3388,7 +3388,7 @@ Make sure to follow all the instructions while answering questions.
         await sleep(1500);
         jurorsay("J1", "Well, we have a verdict, then.");
       }
-      if (pureMessage.trim().toLowerCase() === "/love") {
+      else if (pureMessage.trim().toLowerCase() === "/love") {
         const userMessageRef = push(messagesRef);
         await update(userMessageRef, {
           User: email,
@@ -3396,8 +3396,8 @@ Make sure to follow all the instructions while answering questions.
           Date: Date.now(),
         });
         async function lovebotsay(e) {
-          const userMessageRef = push(messagesRef);
-          await update(userMessageRef, {
+          const lovebot = push(messagesRef);
+          await update(lovebot, {
             User: BOT_USERS.LOVE,
             Message: e,
             Date: Date.now(),
