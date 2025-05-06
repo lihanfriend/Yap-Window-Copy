@@ -3185,6 +3185,11 @@ Make sure to follow all the instructions while answering questions.
           }
         }
         tiggyargumentmessage = message.split(" ");
+        if (tiggyargumentmessage.length < 2) {
+          return;
+          isSending = false;
+          sendButton.disabled = false;
+        }
         tiggymessagewordcount = random(tiggyargumentmessage.length);
         function getRandomSet(list, numElements) {
           if (numElements > list.length) {
