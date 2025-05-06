@@ -3182,7 +3182,7 @@ Make sure to follow all the instructions while answering questions.
           }
         }
         tiggyargumentmessage = message.split(" ");
-        tiggymessagewordcount = random(tiggyargumentmessage.length - 1);
+        tiggymessagewordcount = random(tiggyargumentmessage.length);
         function getRandomSet(list, numElements) {
           if (numElements > list.length) {
             return "Number of elements to choose cannot exceed list length";
@@ -3206,6 +3206,13 @@ Make sure to follow all the instructions while answering questions.
         finaltiggymessage = '';
         for (let i = 0; i < sortedlist.length; i++) {
           finaltiggymessage += tiggyargumentmessage[sortedlist[i]];
+          finaltiggymessage += ' ';
+        }
+
+        if (Math.random() > 0.5) {
+            finaltiggymessage = `*${finaltiggymessage}?*`
+        } else {
+            finaltiggymessage = `*${finaltiggymessage}*`
         }
         const tiggymessage = push(messagesRef);
         await update(tiggymessage, {
@@ -3399,7 +3406,7 @@ Make sure to follow all the instructions while answering questions.
         mode = pureMessage.trim().toLowerCase().split(" ")[1];
         person1 = pureMessage.trim().toLowerCase().split(" ")[2];
         person2 = pureMessage.trim().toLowerCase().split(" ")[3];
-        ship = mode = pureMessage.trim().toLowerCase().split(" ")[4];
+        ship = pureMessage.trim().toLowerCase().split(" ")[4];
         if (mode == "pull") {
           lovebotsay(
             `${email} wants ${person1} to be their name also redacted!`,
