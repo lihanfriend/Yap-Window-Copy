@@ -3184,48 +3184,49 @@ Make sure to follow all the instructions while answering questions.
             }, 5000);
           }
         }
-        if (pureMessage.trim().toLowerCase == "/tiggy") {
-          tiggyargumentmessage = message.split(" ");
-          tiggymessagewordcount = random(tiggyargumentmessage.length);
-          function getRandomSet(list, numElements) {
-            if (numElements > list.length) {
-              return "Number of elements to choose cannot exceed list length";
-            }
-
-            const shuffled = [...list].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, numElements);
-          }
-          function generateRandomNumbers(min, max) {
-            const randomNumbers = [];
-            for (let i = 0; i < tiggymessagewordcount; i++) {
-              const randomNumber =
-                Math.floor(Math.random() * (max - min + 1)) + min;
-              randomNumbers.push(randomNumber);
-            }
-            return randomNumbers;
-          }
-          sortedlist = generateRandomNumbers(
-            1,
-            tiggyargumentmessage.length,
-          ).sort((a, b) => a - b);
-          finaltiggymessage = "";
-          for (let i = 0; i < sortedlist.length; i++) {
-            finaltiggymessage += tiggyargumentmessage[sortedlist[i]];
-            finaltiggymessage += " ";
+        tiggyargumentmessage = message.split(" ");
+        tiggymessagewordcount = random(tiggyargumentmessage.length);
+        function getRandomSet(list, numElements) {
+          if (numElements > list.length) {
+            return "Number of elements to choose cannot exceed list length";
           }
 
-          if (Math.random() > 0.5) {
-            finaltiggymessage = `*${finaltiggymessage}?*`;
-          } else {
-            finaltiggymessage = `*${finaltiggymessage}*`;
-          }
-          const tiggymessage = push(messagesRef);
-          await update(tiggymessage, {
-            User: BOT_USERS.TIGGY,
-            Message: finaltiggymessage,
-            Date: Date.now(),
-          });
+          const shuffled = [...list].sort(() => 0.5 - Math.random());
+          return shuffled.slice(0, numElements);
         }
+        function generateRandomNumbers(min, max) {
+          const randomNumbers = [];
+          for (let i = 0; i < tiggymessagewordcount; i++) {
+            const randomNumber =
+              Math.floor(Math.random() * (max - min + 1)) + min;
+            randomNumbers.push(randomNumber);
+          }
+          return randomNumbers;
+        }
+        sortedlist = generateRandomNumbers(
+          1,
+          tiggyargumentmessage.length,
+        ).sort((a, b) => a - b);
+        finaltiggymessage = "";
+        for (let i = 0; i < sortedlist.length; i++) {
+          finaltiggymessage += tiggyargumentmessage[sortedlist[i]];
+          finaltiggymessage += " ";
+        }
+
+        if (Math.random() > 0.5) {
+          finaltiggymessage = `*${finaltiggymessage}?*`;
+        } else {
+          finaltiggymessage = `*${finaltiggymessage}*`;
+        }
+        if (finaltiggymessage == "**") {
+          finaltiggymessage = "";
+        }
+        const tiggymessage = push(messagesRef);
+        await update(tiggymessage, {
+          User: BOT_USERS.TIGGY,
+          Message: finaltiggymessage,
+          Date: Date.now(),
+        });
       }
       if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
         const userMessageRef = push(messagesRef);
