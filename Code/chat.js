@@ -3181,6 +3181,37 @@ Make sure to follow all the instructions while answering questions.
             }, 5000);
           }
         }
+        tiggyargumentmessage = message.split(" ");
+        tiggymessagewordcount = random(tiggyargumentmessage.length - 1);
+        function getRandomSet(list, numElements) {
+          if (numElements > list.length) {
+            return "Number of elements to choose cannot exceed list length";
+          }
+
+          const shuffled = [...list].sort(() => 0.5 - Math.random());
+          return shuffled.slice(0, numElements);
+        }
+        function generateRandomNumbers(min, max) {
+          const randomNumbers = [];
+          for (let i = 0; i < tiggymessagewordcount; i++) {
+            const randomNumber =
+              Math.floor(Math.random() * (max - min + 1)) + min;
+            randomNumbers.push(randomNumber);
+          }
+          return randomNumbers;
+        }
+        sortedlist = generateRandomNumbers(1, tiggyargumentmessage.length).sort(
+          (a, b) => a - b,
+        );
+        for (let i = 0; i < sortedlist.length; i++) {
+          finaltiggymessage += tiggyargumentmessage[sortedlist[i]];
+        }
+        const tiggymessage = push(messagesRef);
+        await update(tiggymessage, {
+          User: BOT_USERS.TIGGY,
+          Message: finaltiggymessage,
+          Date: Date.now(),
+        });
       }
       if (pureMessage.trim().toLowerCase() === "/twelveangrymen") {
         const userMessageRef = push(messagesRef);
@@ -3368,24 +3399,29 @@ Make sure to follow all the instructions while answering questions.
         person1 = pureMessage.trim().toLowerCase().split(" ")[2];
         person2 = pureMessage.trim().toLowerCase().split(" ")[3];
         ship = mode = pureMessage.trim().toLowerCase().split(" ")[4];
-        if (mode == "pull")
+        if (mode == "pull") {
           lovebotsay(
             `${email} wants ${person1} to be their name also redacted!`,
           );
-        if (mode == "push")
+        }
+        if (mode == "push") {
           lovebotsay(
             `${email} wants ${person2} to be ${person1}'s name redacted!`,
           );
-        if (mode == "ship")
+        }
+        if (mode == "ship") {
           lovebotsay(`${email} ships ${person1} with ${person2}: ${ship}!`);
-        if (mode == "commutative")
+        }
+        if (mode == "commutative") {
           lovebotsay(
             `${email} hopes that ${person1} and ${person2} will form a commutative relationship!`,
           );
-        if (mode == "breakup")
+        }
+        if (mode == "breakup") {
           lovebotsay(
             `${email} hopes that ${person1} and ${person2} will break up!`,
           );
+        }
         if (mode == "yiyang") lovebotsay(`Fat Cat.`);
       } else {
         const userMessageRef = push(messagesRef);
